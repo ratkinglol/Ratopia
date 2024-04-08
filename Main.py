@@ -209,6 +209,86 @@ def new_game():
   freefor_all_square.hideturtle()
   freefor_all_square.penup()
   #
+  bot_1_square = turtle.Turtle()
+  bot_1_square.speed(0)
+  bot_1_square.color("blue")
+  bot_1_square.penup()
+  bot_1_square.goto(-215, 0)
+  bot_1_square.pendown()
+  bot_1_square.begin_fill()
+  for _ in range(2):
+    bot_1_square.forward(25)
+    bot_1_square.left(90)
+    bot_1_square.forward(30)
+    bot_1_square.left(90)
+  bot_1_square.end_fill()
+  bot_1_square.hideturtle()
+  bot_1_square.penup()
+  #
+  bot_2_square = turtle.Turtle()
+  bot_2_square.speed(0)
+  bot_2_square.color('blue')
+  bot_2_square.penup()
+  bot_2_square.goto(-115, 0)
+  bot_2_square.pendown()
+  bot_2_square.begin_fill()
+  for _ in range(2):
+    bot_2_square.forward(25)
+    bot_2_square.left(90)
+    bot_2_square.forward(30)
+    bot_2_square.left(90)
+  bot_2_square.end_fill()
+  bot_2_square.hideturtle()
+  bot_2_square.penup()
+  #
+  bot_3_square = turtle.Turtle()
+  bot_3_square.speed(0)
+  bot_3_square.color('blue')
+  bot_3_square.penup()
+  bot_3_square.goto(-15, 0)
+  bot_3_square.pendown()
+  bot_3_square.begin_fill()
+  for _ in range(2):
+    bot_3_square.forward(25)
+    bot_3_square.left(90)
+    bot_3_square.forward(30)
+    bot_3_square.left(90)
+  bot_3_square.end_fill()
+  bot_3_square.hideturtle()
+  bot_3_square.penup()
+  #
+  bot_4_square = turtle.Turtle()
+  bot_4_square.speed(0)
+  bot_4_square.color('blue')
+  bot_4_square.penup()
+  bot_4_square.goto(85, 0)
+  bot_4_square.pendown()
+  bot_4_square.begin_fill()
+  for _ in range(2):
+    bot_4_square.forward(25)
+    bot_4_square.left(90)
+    bot_4_square.forward(30)
+    bot_4_square.left(90)
+  bot_4_square.end_fill()
+  bot_4_square.hideturtle()
+  bot_4_square.penup()
+  #
+  bot_5_square = turtle.Turtle()
+  bot_5_square.speed(0)
+  bot_5_square.color('blue')
+  bot_5_square.penup()
+  bot_5_square.goto(185, 0)
+  bot_5_square.pendown()
+  bot_5_square.begin_fill()
+  for _ in range(2):
+    bot_5_square.forward(25)
+    bot_5_square.left(90)
+    bot_5_square.forward(30)
+    bot_5_square.left(90)
+  bot_5_square.end_fill()
+  bot_5_square.hideturtle()
+  bot_5_square.penup()
+  #
   new_game_text = turtle.Turtle()
   new_game_text.speed(0)
   new_game_text.color("white")
@@ -504,12 +584,17 @@ def click_thing(x, y):
     elif 187 <= x <= 412 and 300 <= y <= 328:
       print("DEBUG", "|", "FREE 4 ALL")
       free_4_all_select()
+    elif -214 <= x <= -189 and -1 <= y <= 28:
+      print("DEBUG", "|", "1 BOT")
+    elif -113 <= x <= -88 and -1 <= y <= 28:
+      print("DEBUG", "|", "2 BOTS")
+    elif -14 <= x <= 10 and -1 <= y <= 28:
+      print("DEBUG", "|", "3 BOTS")
+    elif 86 <= x <= 110 and -1 <= y <= 28:
+      print("DEBUG", "|", "4 BOTS")
+    elif 187 <= x <= 210 and -1 <= y <= 28:
+      print("DEBUG", "|", "5 BOTS")
 
-
-DEBUG 188.0 328.0
-DEBUG 411.0 327.0
-DEBUG 187.0 300.0
-DEBUG 413.0 300.0
 
 starting_screen()
 
