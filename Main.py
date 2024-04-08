@@ -12,7 +12,7 @@ ctrl_key_press = 1
 
 custom_selected = 0
 coop_selected = 0
-f4f_selected = 0
+f4a_selected = 0
 
 def key_1_1():
   pass
@@ -70,6 +70,12 @@ writing_tool.color('white')
 writing_tool.penup()
 writing_tool.hideturtle()
 writing_tool.goto(0, 0)
+writing_tool.hideturtle()
+
+while writing_tool.isvisible() == True:
+  writing_tool.hideturtle()
+  if writing_tool.isvisible() == False:
+    break
 
 def write_console(x_c, y_c, text, size):
   global writing_tool
@@ -251,8 +257,13 @@ def redo_coop_text():
   new_game_text.goto(0, 300)
   new_game_text.write("Co-Op Survival", align="center", font=("Arial", 20, "normal"))
 
+def redo_f4a_text():
+  global new_game_text
+  new_game_text.goto(300, 300)
+  new_game_text.write("Free For All", align="center", font=("Arial", 20, "normal"))
+
 def coop_select():
-  global coop_selected, custom_selected, coop_selected_square
+  global coop_selected, custom_selected, coop_selected_square, f4a_selected
   coop_selected = 1
   coop_square.clear()
   turtle.tracer(0, 0)
@@ -296,6 +307,27 @@ def coop_select():
     custom_square.hideturtle()
     custom_square.penup()
     redo_custom_text()
+    turtle.update()
+    turtle.tracer(1, 10)
+  elif f4a_selected == 1:
+    turtle.tracer(0, 0)
+    free_selected_square.clear()
+    freefor_all_square = turtle.Turtle()
+    freefor_all_square.speed(0)
+    freefor_all_square.color("blue")
+    freefor_all_square.penup()
+    freefor_all_square.goto(185, 300)
+    freefor_all_square.pendown()
+    freefor_all_square.begin_fill()
+    for _ in range(2):
+      freefor_all_square.forward(225)
+      freefor_all_square.left(90)
+      freefor_all_square.forward(30)
+      freefor_all_square.left(90)
+    freefor_all_square.end_fill()
+    freefor_all_square.hideturtle()
+    freefor_all_square.penup()
+    redo_f4a_text()
     turtle.update()
     turtle.tracer(1, 10)
   
@@ -350,13 +382,104 @@ def custom_select():
     redo_coop_text()
     turtle.update()
     turtle.tracer(1, 10)
+  elif f4a_selected == 1:
+    turtle.tracer(0, 0)
+    free_selected_square.clear()
+    freefor_all_square = turtle.Turtle()
+    freefor_all_square.speed(0)
+    freefor_all_square.color("blue")
+    freefor_all_square.penup()
+    freefor_all_square.goto(185, 300)
+    freefor_all_square.pendown()
+    freefor_all_square.begin_fill()
+    for _ in range(2):
+      freefor_all_square.forward(225)
+      freefor_all_square.left(90)
+      freefor_all_square.forward(30)
+      freefor_all_square.left(90)
+    freefor_all_square.end_fill()
+    freefor_all_square.hideturtle()
+    freefor_all_square.penup()
+    redo_f4a_text()
+    turtle.update()
+    turtle.tracer(1, 10)
 
 
 def free_4_all_select():
-  global coop_selected, custom_selected, f4f_selected, free_selected_square
+  global coop_selected, custom_selected, f4a_selected, free_selected_square
   turtle.tracer(0, 0)
+  f4a_selected = 1
   free_selected_square = turtle.Turtle()
   free_selected_square.speed(0)
+  free_selected_square.color(BRIGHT_YELLOW)
+  free_selected_square.penup()
+  free_selected_square.goto(185, 298)
+  free_selected_square.begin_fill()
+  #
+  for _ in range(2):
+    free_selected_square.forward(227)
+    free_selected_square.left(90)
+    free_selected_square.forward(35)
+    free_selected_square.left(90)
+  free_selected_square.end_fill()
+  free_selected_square.penup()
+  free_selected_square.hideturtle()
+  redo_f4a_text()
+  turtle.update()
+  turtle.tracer(1, 10)
+  if coop_selected == 1:
+    #
+    turtle.tracer(0, 0)
+    #
+    coop_selected = 0
+    #
+    coop_selected_square.clear()
+    #
+    coop_square.speed(0)
+    coop_square.color("blue")
+    coop_square.penup()
+    coop_square.goto(-115, 300)
+    coop_square.pendown()
+    coop_square.begin_fill()
+    #
+    for _ in range(2):
+      coop_square.forward(225)
+      coop_square.left(90)
+      coop_square.forward(30)
+      coop_square.left(90)
+    #
+    coop_square.end_fill()
+    coop_square.hideturtle()
+    coop_square.penup()
+    redo_coop_text()
+    turtle.update()
+    turtle.tracer(1, 10)
+  elif custom_selected == 1:
+    turtle.tracer(0, 0)
+    custom_selected = 0
+    #
+    custom_selected_square.clear()
+    #
+    custom_square = turtle.Turtle()
+    custom_square.speed(0)
+    custom_square.color('blue')
+    custom_square.penup()
+    custom_square.goto(-350, 300)
+    custom_square.pendown()
+    custom_square.begin_fill()
+    #
+    for _ in range(2):
+      custom_square.forward(100)
+      custom_square.left(90)
+      custom_square.forward(30)
+      custom_square.left(90)
+    #
+    custom_square.end_fill()
+    custom_square.hideturtle()
+    custom_square.penup()
+    redo_custom_text()
+    turtle.update()
+    turtle.tracer(1, 10)
 
 def click_thing(x, y):
   global starting_screen_on, new_game_screen_on #1
@@ -380,6 +503,7 @@ def click_thing(x, y):
       coop_select()
     elif 187 <= x <= 412 and 300 <= y <= 328:
       print("DEBUG", "|", "FREE 4 ALL")
+      free_4_all_select()
 
 
 DEBUG 188.0 328.0
