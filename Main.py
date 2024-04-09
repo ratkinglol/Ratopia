@@ -14,6 +14,12 @@ custom_selected = 0
 coop_selected = 0
 f4a_selected = 0
 
+bot_1_selected = 0
+bot_2_selected = 0
+bot_3_selected = 0
+bot_4_selected = 0
+bot_5_selected = 0
+
 def key_1_1():
   pass
 
@@ -156,7 +162,7 @@ def start_clear():
   load_game_square.clear()
 
 def new_game():
-  global custom_square, new_game_text, coop_square
+  global custom_square, new_game_text, coop_square, bot_1_square, bot_2_square, bot_3_square, bot_4_square, bot_5_square
   turtle.tracer(0, 0)
   #
   start_clear()
@@ -341,6 +347,24 @@ def redo_f4a_text():
   global new_game_text
   new_game_text.goto(300, 300)
   new_game_text.write("Free For All", align="center", font=("Arial", 20, "normal"))
+
+def redo_bot_text(thing):
+  global new_game_text
+  if thing == 1:
+    new_game_text.goto(-200, 0)
+    new_game_text.write("1", align="center", font=("Arial", 20, "normal"))
+  elif thing == 2:
+    new_game_text.goto(-100, 0)
+    new_game_text.write("2", align="center", font=("Arial", 20, "normal"))
+  elif thing == 3:
+    new_game_text.goto(0, 0)
+    new_game_text.write("3", align="center", font=("Arial", 20, "normal"))
+  elif thing == 4:
+    new_game_text.goto(100, 0)
+    new_game_text.write("4", align="center", font=("Arial", 20, "normal"))
+  elif thing == 5:
+    new_game_text.goto(200, 0)
+    new_game_text.write("5", align="center", font=("Arial", 20, "normal"))
 
 def coop_select():
   global coop_selected, custom_selected, coop_selected_square, f4a_selected
@@ -561,6 +585,90 @@ def free_4_all_select():
     turtle.update()
     turtle.tracer(1, 10)
 
+def bot_1_select():
+  global bot_1_selected, bot_2_selected, bot_3_selected, bot_4_selected, bot_5_selected, bot1selectedsquare
+  turtle.tracer(0, 0)
+  #
+  bot_1_selected = 1
+  bot_1_square.clear()
+  #
+  bot1selectedsquare = turtle.Turtle()
+  bot1selectedsquare.speed(0)
+  bot1selectedsquare.color(BRIGHT_YELLOW)
+  bot1selectedsquare.penup()
+  bot1selectedsquare.goto(-215, 0)
+  bot1selectedsquare.pendown()
+  bot1selectedsquare.begin_fill()
+  for _ in range(2):
+    bot1selectedsquare.forward(25)
+    bot1selectedsquare.left(90)
+    bot1selectedsquare.forward(30)
+    bot1selectedsquare.left(90)
+  bot1selectedsquare.end_fill()
+  bot1selectedsquare.hideturtle()
+  bot1selectedsquare.penup()
+  redo_bot_text(1)
+  if bot_2_selected == 1:
+    bot_2_selected = 0
+    bot2selectedsquare.clear()
+    bot_2_square = turtle.Turtle()
+    bot_2_square.speed(0)
+    bot_2_square.color('blue')
+    bot_2_square.penup()
+    bot_2_square.goto(-115, 0)
+    bot_2_square.pendown()
+    bot_2_square.begin_fill()
+    for _ in range(2):
+      bot_2_square.forward(25)
+      bot_2_square.left(90)
+      bot_2_square.forward(30)
+      bot_2_square.left(90)
+    bot_2_square.end_fill()
+    bot_2_square.penup()
+    bot_2_square.hideturtle()
+    redo_bot_text(2)
+  elif bot_3_selected == 1:
+    pass
+  elif bot_4_selected == 1:
+    pass
+  elif bot_5_selected == 1:
+    pass
+  turtle.update()
+  turtle.tracer(1, 10)
+
+
+def bot_2_select():
+  global bot_1_selected, bot_2_selected, bot_3_selected, bot_4_selected, bot_5_selected, bot2selectedsquare
+  #
+  bot_2_selected = 1
+  bot_2_square.clear()
+  #
+  bot2selectedsquare = turtle.Turtle()
+  bot2selectedsquare.speed(0)
+  bot2selectedsquare.color(BRIGHT_YELLOW)
+  bot2selectedsquare.penup()
+  bot2selectedsquare.goto(-115, 0)
+  bot2selectedsquare.pendown()
+  bot2selectedsquare.begin_fill()
+  for _ in range(2):
+    bot2selectedsquare.forward(25)
+    bot2selectedsquare.left(90)
+    bot2selectedsquare.forward(30)
+    bot2selectedsquare.left(90)
+  bot2selectedsquare.end_fill()
+  bot2selectedsquare.penup()
+  bot2selectedsquare.hideturtle()
+  redo_bot_text(2)
+  if bot_1_selected == 1:
+    pass
+  elif bot_3_selected == 1:
+    pass
+  elif bot_4_selected == 1:
+    pass
+  elif bot_5_selected == 1:
+    pass
+
+
 def click_thing(x, y):
   global starting_screen_on, new_game_screen_on #1
   print("DEBUG", x, y) #2
@@ -586,6 +694,7 @@ def click_thing(x, y):
       free_4_all_select()
     elif -214 <= x <= -189 and -1 <= y <= 28:
       print("DEBUG", "|", "1 BOT")
+      bot_1_select()
     elif -113 <= x <= -88 and -1 <= y <= 28:
       print("DEBUG", "|", "2 BOTS")
     elif -14 <= x <= 10 and -1 <= y <= 28:
