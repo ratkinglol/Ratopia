@@ -14,6 +14,8 @@ custom_selected = 0
 coop_selected = 0
 f4a_selected = 0
 
+in_custom_menu = 0
+
 bot_1_selected = 0
 bot_2_selected = 0
 bot_3_selected = 0
@@ -78,15 +80,20 @@ writing_tool.hideturtle()
 writing_tool.goto(0, 0)
 writing_tool.hideturtle()
 
-while writing_tool.isvisible() == True:
-  writing_tool.hideturtle()
-  if writing_tool.isvisible() == False:
+while True:
+  if writing_tool.isvisible() == True:
+    writing_tool.hideturtle()
+  else:
     break
+
 
 def write_console(x_c, y_c, text, size):
   global writing_tool
+  turtle.tracer(0, 0)
   writing_tool.goto(x_c, y_c)
   writing_tool.write(text, align="center", font=("Arial", size, "normal"))
+  turtle.update()
+  turtle.tracer(1, 10)
 
 def starting_screen():
   global New_Game_Square, load_game_square, title_text
@@ -505,9 +512,113 @@ def custom_select():
     freefor_all_square.hideturtle()
     freefor_all_square.penup()
     redo_f4a_text()
-    turtle.update()
-    turtle.tracer(1, 10)
+  custom_select_1()
+  turtle.update()
+  turtle.tracer(1, 10)
 
+def redo_custom_select_1_text(thing):
+  if thing == "x":
+    custom_select_1_draw_write_thing.color('white')
+    custom_select_1_draw_write_thing.goto(-500, 400)
+    custom_select_1_draw_write_thing.write("X", align="center", font=("Arial", 20, "normal"))
+
+def custom_select_1():
+  turtle.tracer(0, 0)
+  global custom_select_1_draw_write_thing, in_custom_menu, new_game_screen_on
+  #
+  in_custom_menu = 1
+  new_game_screen_on = 0
+  #
+  custom_select_1_draw_write_thing = turtle.Turtle()
+  custom_select_1_draw_write_thing.speed(0)
+  custom_select_1_draw_write_thing.color('white')
+  custom_select_1_draw_write_thing.penup()
+  custom_select_1_draw_write_thing.hideturtle()
+  #
+  custom_select_1_draw_write_thing.goto(-500, 400)
+  custom_select_1_draw_write_thing.write("X", align="center", font=("Arial", 20, "normal"))
+  #
+  custom_select_1_draw_write_thing.color('black')
+  custom_select_1_draw_write_thing.goto(-500, 385)
+  custom_select_1_draw_write_thing.pendown()
+  custom_select_1_draw_write_thing.begin_fill()
+  custom_select_1_draw_write_thing.circle(30)
+  custom_select_1_draw_write_thing.end_fill()
+  custom_select_1_draw_write_thing.penup()
+  redo_custom_select_1_text("x")
+  #
+  custom_select_1_draw_write_thing.color('black')
+  custom_select_1_draw_write_thing.goto(-425, 450)
+  custom_select_1_draw_write_thing.pendown()
+  custom_select_1_draw_write_thing.begin_fill()
+  for _ in range(2):
+    custom_select_1_draw_write_thing.forward(850)
+    custom_select_1_draw_write_thing.right(90)
+    custom_select_1_draw_write_thing.forward(900)
+    custom_select_1_draw_write_thing.right(90)
+  custom_select_1_draw_write_thing.end_fill()
+  custom_select_1_draw_write_thing.penup()
+  #
+  custom_select_1_draw_write_thing.color('white')
+  custom_select_1_draw_write_thing.goto(0, 400)
+  custom_select_1_draw_write_thing.write('Custom Game Mode', align="center", font=("Arial", 20, "normal"))
+  #
+  custom_select_1_draw_write_thing.goto(-350, 390)
+  custom_select_1_draw_write_thing.pendown()
+  custom_select_1_draw_write_thing.goto(350, 390)
+  custom_select_1_draw_write_thing.penup()
+  #
+  custom_select_1_draw_write_thing.goto(350, 290)
+  custom_select_1_draw_write_thing.pendown()
+  custom_select_1_draw_write_thing.goto(-350, 290)
+  custom_select_1_draw_write_thing.penup()
+  #
+  custom_select_1_draw_write_thing.goto(350, 190)
+  custom_select_1_draw_write_thing.pendown()
+  custom_select_1_draw_write_thing.goto(-350, 190)
+  custom_select_1_draw_write_thing.penup()
+  #
+  custom_select_1_draw_write_thing.goto(350, 90)
+  custom_select_1_draw_write_thing.pendown()
+  custom_select_1_draw_write_thing.goto(-350, 90)
+  custom_select_1_draw_write_thing.penup()
+  #
+  custom_select_1_draw_write_thing.goto(350, -10)
+  custom_select_1_draw_write_thing.pendown()
+  custom_select_1_draw_write_thing.goto(-350, -10)
+  custom_select_1_draw_write_thing.penup()
+  #
+  custom_select_1_draw_write_thing.goto(-300, 350)
+  custom_select_1_draw_write_thing.write("Infinity", align="center", font=("Arial", 20, "normal"))
+  #
+  custom_select_1_draw_write_thing.goto(0, 350)
+  custom_select_1_draw_write_thing.write('War', align="center", font=("Arial", 20, "normal"))
+  #
+  custom_select_1_draw_write_thing.goto(300, 350)
+  custom_select_1_draw_write_thing.write('Score', align="center", font=("Arial", 20, "normal"))
+  #
+  custom_select_1_draw_write_thing.goto(0, 300)
+  custom_select_1_draw_write_thing.write('Nations Allowed', align="center", font=('Arial', 20, 'normal'))
+  #
+  custom_select_1_draw_write_thing.goto(0, 200)
+  custom_select_1_draw_write_thing.write('Difficulty', align="center", font=("Arial", 20, 'normal'))
+  #
+  custom_select_1_draw_write_thing.goto(-300, 150)
+  custom_select_1_draw_write_thing.write('Easy', align='center', font=('Arial', 20, 'normal'))
+  #
+  custom_select_1_draw_write_thing.goto(0, 150)
+  custom_select_1_draw_write_thing.write('Medium', align='center', font=('Arial', 20, 'normal'))
+  #
+  custom_select_1_draw_write_thing.goto(300, 150)
+  custom_select_1_draw_write_thing.write('Hard', align='center', font=('Arial', 20, 'normal'))
+  #
+  custom_select_1_draw_write_thing.goto(0, 100)
+  custom_select_1_draw_write_thing.write('Map Type', align="center", font=("Arial", 20, "normal"))
+  #
+  custom_select_1_draw_write_thing.goto(0, 0)
+  custom_select_1_draw_write_thing.write('Map Size', align='center', font=('Arial', 20, 'normal'))
+  turtle.update()
+  turtle.tracer(1, 10)
 
 def free_4_all_select():
   global coop_selected, custom_selected, f4a_selected, free_selected_square
@@ -628,17 +739,69 @@ def bot_1_select():
     bot_2_square.hideturtle()
     redo_bot_text(2)
   elif bot_3_selected == 1:
-    pass
+    bot_3_selected = 0
+    bot3selectedsquare.clear()
+    bot_3_square = turtle.Turtle()
+    bot_3_square.speed(0)
+    bot_3_square.color('blue')
+    bot_3_square.penup()
+    bot_3_square.goto(-15, 0)
+    bot_3_square.pendown()
+    bot_3_square.begin_fill()
+    for _ in range(2):
+      bot_3_square.forward(25)
+      bot_3_square.left(90)
+      bot_3_square.forward(30)
+      bot_3_square.left(90)
+    bot_3_square.end_fill()
+    bot_3_square.hideturtle()
+    bot_3_square.penup()
+    redo_bot_text(3)
   elif bot_4_selected == 1:
-    pass
+    bot_4_selected = 0
+    bot4selectedsquare.clear()
+    bot_4_square = turtle.Turtle()
+    bot_4_square.speed(0)
+    bot_4_square.color('blue')
+    bot_4_square.penup()
+    bot_4_square.goto(85, 0)
+    bot_4_square.pendown()
+    bot_4_square.begin_fill()
+    for _ in range(2):
+      bot_4_square.forward(25)
+      bot_4_square.left(90)
+      bot_4_square.forward(30)
+      bot_4_square.left(90)
+    bot_4_square.end_fill()
+    bot_4_square.hideturtle()
+    bot_4_square.penup()
+    redo_bot_text(4)
   elif bot_5_selected == 1:
-    pass
+    bot_5_selected = 0
+    bot5selectedsquare.clear()
+    bot_5_square = turtle.Turtle()
+    bot_5_square.speed(0)
+    bot_5_square.color('blue')
+    bot_5_square.penup()
+    bot_5_square.goto(185, 0)
+    bot_5_square.pendown()
+    bot_5_square.begin_fill()
+    for _ in range(2):
+      bot_5_square.forward(25)
+      bot_5_square.left(90)
+      bot_5_square.forward(30)
+      bot_5_square.left(90)
+    bot_5_square.end_fill()
+    bot_5_square.hideturtle()
+    bot_5_square.penup()
+    redo_bot_text(5)
   turtle.update()
   turtle.tracer(1, 10)
 
 
 def bot_2_select():
   global bot_1_selected, bot_2_selected, bot_3_selected, bot_4_selected, bot_5_selected, bot2selectedsquare
+  turtle.tracer(0, 0)
   #
   bot_2_selected = 1
   bot_2_square.clear()
@@ -660,17 +823,385 @@ def bot_2_select():
   bot2selectedsquare.hideturtle()
   redo_bot_text(2)
   if bot_1_selected == 1:
-    pass
+    bot_1_selected = 0
+    bot1selectedsquare.clear()
+    bot_1_square = turtle.Turtle()
+    bot_1_square.speed(0)
+    bot_1_square.color("blue")
+    bot_1_square.penup()
+    bot_1_square.goto(-215, 0)
+    bot_1_square.pendown()
+    bot_1_square.begin_fill()
+    for _ in range(2):
+      bot_1_square.forward(25)
+      bot_1_square.left(90)
+      bot_1_square.forward(30)
+      bot_1_square.left(90)
+    bot_1_square.end_fill()
+    bot_1_square.hideturtle()
+    bot_1_square.penup()
+    redo_bot_text(1)
   elif bot_3_selected == 1:
-    pass
+    bot_3_selected = 0
+    bot3selectedsquare.clear()
+    bot_3_square = turtle.Turtle()
+    bot_3_square.speed(0)
+    bot_3_square.color('blue')
+    bot_3_square.penup()
+    bot_3_square.goto(-15, 0)
+    bot_3_square.pendown()
+    bot_3_square.begin_fill()
+    for _ in range(2):
+      bot_3_square.forward(25)
+      bot_3_square.left(90)
+      bot_3_square.forward(30)
+      bot_3_square.left(90)
+    bot_3_square.end_fill()
+    bot_3_square.hideturtle()
+    bot_3_square.penup()
+    redo_bot_text(3)
   elif bot_4_selected == 1:
-    pass
+    bot_4_selected = 0
+    bot4selectedsquare.clear()
+    bot_4_square = turtle.Turtle()
+    bot_4_square.speed(0)
+    bot_4_square.color('blue')
+    bot_4_square.penup()
+    bot_4_square.goto(85, 0)
+    bot_4_square.pendown()
+    bot_4_square.begin_fill()
+    for _ in range(2):
+      bot_4_square.forward(25)
+      bot_4_square.left(90)
+      bot_4_square.forward(30)
+      bot_4_square.left(90)
+    bot_4_square.end_fill()
+    bot_4_square.hideturtle()
+    bot_4_square.penup()
+    redo_bot_text(4)
   elif bot_5_selected == 1:
-    pass
+    bot_5_selected = 0
+    bot5selectedsquare.clear()
+    bot_5_square = turtle.Turtle()
+    bot_5_square.speed(0)
+    bot_5_square.color('blue')
+    bot_5_square.penup()
+    bot_5_square.goto(185, 0)
+    bot_5_square.pendown()
+    bot_5_square.begin_fill()
+    for _ in range(2):
+      bot_5_square.forward(25)
+      bot_5_square.left(90)
+      bot_5_square.forward(30)
+      bot_5_square.left(90)
+    bot_5_square.end_fill()
+    bot_5_square.hideturtle()
+    bot_5_square.penup()
+    redo_bot_text(5)
+  turtle.update()
+  turtle.tracer(1, 10)
+
+def bot_3_select():
+  global bot_1_selected, bot_2_selected, bot_3_selected, bot_4_selected, bot_5_selected, bot3selectedsquare
+  turtle.tracer(0, 0)
+  bot_3_selected = 1
+  bot_3_square.clear()
+  bot3selectedsquare = turtle.Turtle()
+  bot3selectedsquare.speed(0)
+  bot3selectedsquare.color(BRIGHT_YELLOW)
+  bot3selectedsquare.penup()
+  bot3selectedsquare.goto(-15, 0)
+  bot3selectedsquare.pendown()
+  bot3selectedsquare.begin_fill()
+  for _ in range(2):
+    bot3selectedsquare.forward(25)
+    bot3selectedsquare.left(90)
+    bot3selectedsquare.forward(30)
+    bot3selectedsquare.left(90)
+  bot3selectedsquare.end_fill()
+  bot3selectedsquare.hideturtle()
+  bot3selectedsquare.penup()
+  redo_bot_text(3)
+  if bot_1_selected == 1:
+    bot_1_selected = 0
+    bot1selectedsquare.clear()
+    bot_1_square = turtle.Turtle()
+    bot_1_square.speed(0)
+    bot_1_square.color("blue")
+    bot_1_square.penup()
+    bot_1_square.goto(-215, 0)
+    bot_1_square.pendown()
+    bot_1_square.begin_fill()
+    for _ in range(2):
+      bot_1_square.forward(25)
+      bot_1_square.left(90)
+      bot_1_square.forward(30)
+      bot_1_square.left(90)
+    bot_1_square.end_fill()
+    bot_1_square.hideturtle()
+    bot_1_square.penup()
+    redo_bot_text(1)
+  elif bot_2_selected == 1:
+    bot_2_selected = 0
+    bot2selectedsquare.clear()
+    bot_2_square = turtle.Turtle()
+    bot_2_square.speed(0)
+    bot_2_square.color('blue')
+    bot_2_square.penup()
+    bot_2_square.goto(-115, 0)
+    bot_2_square.pendown()
+    bot_2_square.begin_fill()
+    for _ in range(2):
+      bot_2_square.forward(25)
+      bot_2_square.left(90)
+      bot_2_square.forward(30)
+      bot_2_square.left(90)
+    bot_2_square.end_fill()
+    bot_2_square.penup()
+    bot_2_square.hideturtle()
+    redo_bot_text(2)
+  elif bot_4_selected == 1:
+    bot_4_selected = 0
+    bot4selectedsquare.clear()
+    bot_4_square = turtle.Turtle()
+    bot_4_square.speed(0)
+    bot_4_square.color('blue')
+    bot_4_square.penup()
+    bot_4_square.goto(85, 0)
+    bot_4_square.pendown()
+    bot_4_square.begin_fill()
+    for _ in range(2):
+      bot_4_square.forward(25)
+      bot_4_square.left(90)
+      bot_4_square.forward(30)
+      bot_4_square.left(90)
+    bot_4_square.end_fill()
+    bot_4_square.hideturtle()
+    bot_4_square.penup()
+    redo_bot_text(4)
+  elif bot_5_selected == 1:
+    bot_5_selected = 0
+    bot5selectedsquare.clear()
+    bot_5_square = turtle.Turtle()
+    bot_5_square.speed(0)
+    bot_5_square.color('blue')
+    bot_5_square.penup()
+    bot_5_square.goto(185, 0)
+    bot_5_square.pendown()
+    bot_5_square.begin_fill()
+    for _ in range(2):
+      bot_5_square.forward(25)
+      bot_5_square.left(90)
+      bot_5_square.forward(30)
+      bot_5_square.left(90)
+    bot_5_square.end_fill()
+    bot_5_square.hideturtle()
+    bot_5_square.penup()
+    redo_bot_text(5)
+  turtle.update()
+  turtle.tracer(1, 10)
+
+def bot_4_select():
+  global bot_1_selected, bot_2_selected, bot_3_selected, bot_4_selected, bot_5_selected, bot4selectedsquare
+  turtle.tracer(0, 0)
+  bot_4_selected = 1
+  bot_4_square.clear()
+  bot4selectedsquare = turtle.Turtle()
+  bot4selectedsquare.speed(0)
+  bot4selectedsquare.color(BRIGHT_YELLOW)
+  bot4selectedsquare.penup()
+  bot4selectedsquare.goto(85, 0)
+  bot4selectedsquare.pendown()
+  bot4selectedsquare.begin_fill()
+  for _ in range(2):
+    bot4selectedsquare.forward(25)
+    bot4selectedsquare.left(90)
+    bot4selectedsquare.forward(30)
+    bot4selectedsquare.left(90)
+  bot4selectedsquare.end_fill()
+  bot4selectedsquare.hideturtle()
+  bot4selectedsquare.penup()
+  redo_bot_text(4)
+  if bot_1_selected == 1:
+    bot_1_selected = 0
+    bot1selectedsquare.clear()
+    bot_1_square = turtle.Turtle()
+    bot_1_square.speed(0)
+    bot_1_square.color("blue")
+    bot_1_square.penup()
+    bot_1_square.goto(-215, 0)
+    bot_1_square.pendown()
+    bot_1_square.begin_fill()
+    for _ in range(2):
+      bot_1_square.forward(25)
+      bot_1_square.left(90)
+      bot_1_square.forward(30)
+      bot_1_square.left(90)
+    bot_1_square.end_fill()
+    bot_1_square.hideturtle()
+    bot_1_square.penup()
+    redo_bot_text(1)
+  elif bot_2_selected == 1:
+    bot_2_selected = 0
+    bot2selectedsquare.clear()
+    bot_2_square = turtle.Turtle()
+    bot_2_square.speed(0)
+    bot_2_square.color('blue')
+    bot_2_square.penup()
+    bot_2_square.goto(-115, 0)
+    bot_2_square.pendown()
+    bot_2_square.begin_fill()
+    for _ in range(2):
+      bot_2_square.forward(25)
+      bot_2_square.left(90)
+      bot_2_square.forward(30)
+      bot_2_square.left(90)
+    bot_2_square.end_fill()
+    bot_2_square.penup()
+    bot_2_square.hideturtle()
+    redo_bot_text(2)
+  elif bot_3_selected == 1:
+    bot_3_selected = 0
+    bot3selectedsquare.clear()
+    bot_3_square = turtle.Turtle()
+    bot_3_square.speed(0)
+    bot_3_square.color('blue')
+    bot_3_square.penup()
+    bot_3_square.goto(-15, 0)
+    bot_3_square.pendown()
+    bot_3_square.begin_fill()
+    for _ in range(2):
+      bot_3_square.forward(25)
+      bot_3_square.left(90)
+      bot_3_square.forward(30)
+      bot_3_square.left(90)
+    bot_3_square.end_fill()
+    bot_3_square.hideturtle()
+    bot_3_square.penup()
+    redo_bot_text(3)
+  elif bot_5_selected == 1:
+    bot_5_selected = 0
+    bot5selectedsquare.clear()
+    bot_5_square = turtle.Turtle()
+    bot_5_square.speed(0)
+    bot_5_square.color('blue')
+    bot_5_square.penup()
+    bot_5_square.goto(185, 0)
+    bot_5_square.pendown()
+    bot_5_square.begin_fill()
+    for _ in range(2):
+      bot_5_square.forward(25)
+      bot_5_square.left(90)
+      bot_5_square.forward(30)
+      bot_5_square.left(90)
+    bot_5_square.end_fill()
+    bot_5_square.hideturtle()
+    bot_5_square.penup()
+    redo_bot_text(5)
+  turtle.update()
+  turtle.tracer(1, 10)
+
+def bot_5_select():
+  global bot_1_selected, bot_2_selected, bot_3_selected, bot_4_selected, bot_5_selected, bot5selectedsquare
+  turtle.tracer(0, 0)
+  bot_5_selected = 1
+  bot_5_square.clear()
+  bot5selectedsquare = turtle.Turtle()
+  bot5selectedsquare.speed(0)
+  bot5selectedsquare.color(BRIGHT_YELLOW)
+  bot5selectedsquare.penup()
+  bot5selectedsquare.goto(185, 0)
+  bot5selectedsquare.pendown()
+  bot5selectedsquare.begin_fill()
+  for _ in range(2):
+    bot5selectedsquare.forward(25)
+    bot5selectedsquare.left(90)
+    bot5selectedsquare.forward(30)
+    bot5selectedsquare.left(90)
+  bot5selectedsquare.end_fill()
+  bot5selectedsquare.hideturtle()
+  bot5selectedsquare.penup()
+  redo_bot_text(5)
+  if bot_1_selected == 1:
+    bot_1_selected = 0
+    bot1selectedsquare.clear()
+    bot_1_square = turtle.Turtle()
+    bot_1_square.speed(0)
+    bot_1_square.color("blue")
+    bot_1_square.penup()
+    bot_1_square.goto(-215, 0)
+    bot_1_square.pendown()
+    bot_1_square.begin_fill()
+    for _ in range(2):
+      bot_1_square.forward(25)
+      bot_1_square.left(90)
+      bot_1_square.forward(30)
+      bot_1_square.left(90)
+    bot_1_square.end_fill()
+    bot_1_square.hideturtle()
+    bot_1_square.penup()
+    redo_bot_text(1)
+  elif bot_2_selected == 1:
+    bot_2_selected = 0
+    bot2selectedsquare.clear()
+    bot_2_square = turtle.Turtle()
+    bot_2_square.speed(0)
+    bot_2_square.color('blue')
+    bot_2_square.penup()
+    bot_2_square.goto(-115, 0)
+    bot_2_square.pendown()
+    bot_2_square.begin_fill()
+    for _ in range(2):
+      bot_2_square.forward(25)
+      bot_2_square.left(90)
+      bot_2_square.forward(30)
+      bot_2_square.left(90)
+    bot_2_square.end_fill()
+    bot_2_square.penup()
+    bot_2_square.hideturtle()
+    redo_bot_text(2)
+  elif bot_3_selected == 1:
+    bot_3_selected = 0
+    bot3selectedsquare.clear()
+    bot_3_square = turtle.Turtle()
+    bot_3_square.speed(0)
+    bot_3_square.color('blue')
+    bot_3_square.penup()
+    bot_3_square.goto(-15, 0)
+    bot_3_square.pendown()
+    bot_3_square.begin_fill()
+    for _ in range(2):
+      bot_3_square.forward(25)
+      bot_3_square.left(90)
+      bot_3_square.forward(30)
+      bot_3_square.left(90)
+    bot_3_square.end_fill()
+    bot_3_square.hideturtle()
+    bot_3_square.penup()
+    redo_bot_text(3)
+  elif bot_4_selected == 1:
+    bot_4_selected = 0
+    bot4selectedsquare.clear()
+    bot_4_square = turtle.Turtle()
+    bot_4_square.speed(0)
+    bot_4_square.color('blue')
+    bot_4_square.penup()
+    bot_4_square.goto(85, 0)
+    bot_4_square.pendown()
+    bot_4_square.begin_fill()
+    for _ in range(2):
+      bot_4_square.forward(25)
+      bot_4_square.left(90)
+      bot_4_square.forward(30)
+      bot_4_square.left(90)
+    bot_4_square.end_fill()
+    bot_4_square.hideturtle()
+    bot_4_square.penup()
+    redo_bot_text(4)
 
 
 def click_thing(x, y):
-  global starting_screen_on, new_game_screen_on #1
+  global starting_screen_on, new_game_screen_on, in_custom_menu #1
   print("DEBUG", x, y) #2
   if starting_screen_on == 1: #3
     if -88 <= x <= 90 and 200 <= y <= 238: #4
@@ -697,12 +1228,19 @@ def click_thing(x, y):
       bot_1_select()
     elif -113 <= x <= -88 and -1 <= y <= 28:
       print("DEBUG", "|", "2 BOTS")
+      bot_2_select()
     elif -14 <= x <= 10 and -1 <= y <= 28:
       print("DEBUG", "|", "3 BOTS")
+      bot_3_select()
     elif 86 <= x <= 110 and -1 <= y <= 28:
       print("DEBUG", "|", "4 BOTS")
+      bot_4_select()
     elif 187 <= x <= 210 and -1 <= y <= 28:
       print("DEBUG", "|", "5 BOTS")
+      bot_5_select()
+  elif new_game_screen_on == 0 and in_custom_menu == 1:
+    if -533 <= x <= -472 and 385 <= y <= 446:
+      print("DEBUG", "|", "Exiting Custom Menu")
 
 
 starting_screen()
