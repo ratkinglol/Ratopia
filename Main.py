@@ -1,11 +1,20 @@
+"The Main Game"
 import turtle
-import time
+import requests
+import socket
+import threading
+
 
 BRIGHT_YELLOW = "#FFE800"
 
+SERVER_IP = "192.168.1.31"
+SERVER_PORT = 60214
+
 screen = turtle.Screen()
-screen.setup(1000, 1000)
+screenTk = screen.getcanvas().winfo_toplevel()
+screenTk.attributes("-fullscreen", True)
 screen.bgcolor("pink")
+screen.title("Ratopia V0.0.0")
 
 ctrl_key_press = 1
 
@@ -43,6 +52,7 @@ def ctrl_key():
 
 
 def console_command():
+  "The function that controls the console command logic"
   global useful_x_1, useful_y_1, write_console_command2, write_console_command3, custom_selected, coop_selected
   thingy = turtle.textinput("", "Console Command Terminal")
   if thingy.lower() == "write white arial" or thingy.lower() == "white arial write" or thingy.lower() == "0":
@@ -68,6 +78,9 @@ def console_command():
         print(coop_selected)
       except:
         print("Error, variable 'coop_selected' has no assigned value")
+  elif thingy.lower() == "server":
+    server_console_command = turtle.textinput("", "Code to communicate with server")
+    com_with_server(server_console_command)
 
 starting_screen_on = 1
 new_game_screen_on = 0
@@ -86,6 +99,23 @@ while True:
   else:
     break
 
+def com_with_server(code_for_server):
+  """Function used to communicate with server, there are a few different codes for the server to process.
+  
+  code 'test x', just a test code."""
+  try:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((SERVER_IP, SERVER_PORT))
+    server_msg = s.recv(1024)
+    print(server_msg)
+    s.send(code_for_server.encode())
+    server_msg = s.recv(1024)
+    print(server_msg)
+  except socket.error:
+    print("Error")
+    pass
+  except:
+    pass
 
 def write_console(x_c, y_c, text, size):
   global writing_tool
@@ -176,23 +206,24 @@ def new_game():
   #
   custom_square = turtle.Turtle()
   custom_square.speed(0)
-  custom_square.color('blue')
   custom_square.penup()
-  custom_square.goto(-350, 300)
+  custom_square.goto(-360, 300)
   custom_square.pendown()
+  custom_square.color('black')
   custom_square.begin_fill()
   for _ in range(2):
-    custom_square.forward(100)
+    custom_square.forward(120)
     custom_square.left(90)
     custom_square.forward(30)
     custom_square.left(90)
+  custom_square.color('blue')
   custom_square.end_fill()
   custom_square.hideturtle()
   custom_square.penup()
   #
   coop_square = turtle.Turtle()
   coop_square.speed(0)
-  coop_square.color("blue")
+  coop_square.color("black")
   coop_square.penup()
   coop_square.goto(-115, 300)
   coop_square.pendown()
@@ -202,13 +233,14 @@ def new_game():
     coop_square.left(90)
     coop_square.forward(30)
     coop_square.left(90)
+  coop_square.color('blue')
   coop_square.end_fill()
   coop_square.hideturtle()
   coop_square.penup()
   #
   freefor_all_square = turtle.Turtle()
   freefor_all_square.speed(0)
-  freefor_all_square.color("blue")
+  freefor_all_square.color("black")
   freefor_all_square.penup()
   freefor_all_square.goto(185, 300)
   freefor_all_square.pendown()
@@ -218,13 +250,14 @@ def new_game():
     freefor_all_square.left(90)
     freefor_all_square.forward(30)
     freefor_all_square.left(90)
+  freefor_all_square.color('blue')
   freefor_all_square.end_fill()
   freefor_all_square.hideturtle()
   freefor_all_square.penup()
   #
   bot_1_square = turtle.Turtle()
   bot_1_square.speed(0)
-  bot_1_square.color("blue")
+  bot_1_square.color("black")
   bot_1_square.penup()
   bot_1_square.goto(-215, 0)
   bot_1_square.pendown()
@@ -234,13 +267,14 @@ def new_game():
     bot_1_square.left(90)
     bot_1_square.forward(30)
     bot_1_square.left(90)
+  bot_1_square.color('blue')
   bot_1_square.end_fill()
   bot_1_square.hideturtle()
   bot_1_square.penup()
   #
   bot_2_square = turtle.Turtle()
   bot_2_square.speed(0)
-  bot_2_square.color('blue')
+  bot_2_square.color('black')
   bot_2_square.penup()
   bot_2_square.goto(-115, 0)
   bot_2_square.pendown()
@@ -250,13 +284,14 @@ def new_game():
     bot_2_square.left(90)
     bot_2_square.forward(30)
     bot_2_square.left(90)
+  bot_2_square.color('blue')
   bot_2_square.end_fill()
   bot_2_square.hideturtle()
   bot_2_square.penup()
   #
   bot_3_square = turtle.Turtle()
   bot_3_square.speed(0)
-  bot_3_square.color('blue')
+  bot_3_square.color('black')
   bot_3_square.penup()
   bot_3_square.goto(-15, 0)
   bot_3_square.pendown()
@@ -266,13 +301,14 @@ def new_game():
     bot_3_square.left(90)
     bot_3_square.forward(30)
     bot_3_square.left(90)
+  bot_3_square.color('blue')
   bot_3_square.end_fill()
   bot_3_square.hideturtle()
   bot_3_square.penup()
   #
   bot_4_square = turtle.Turtle()
   bot_4_square.speed(0)
-  bot_4_square.color('blue')
+  bot_4_square.color('black')
   bot_4_square.penup()
   bot_4_square.goto(85, 0)
   bot_4_square.pendown()
@@ -282,13 +318,14 @@ def new_game():
     bot_4_square.left(90)
     bot_4_square.forward(30)
     bot_4_square.left(90)
+  bot_4_square.color('blue')
   bot_4_square.end_fill()
   bot_4_square.hideturtle()
   bot_4_square.penup()
   #
   bot_5_square = turtle.Turtle()
   bot_5_square.speed(0)
-  bot_5_square.color('blue')
+  bot_5_square.color('black')
   bot_5_square.penup()
   bot_5_square.goto(185, 0)
   bot_5_square.pendown()
@@ -298,6 +335,7 @@ def new_game():
     bot_5_square.left(90)
     bot_5_square.forward(30)
     bot_5_square.left(90)
+  bot_5_square.color('blue')
   bot_5_square.end_fill()
   bot_5_square.hideturtle()
   bot_5_square.penup()
@@ -308,34 +346,34 @@ def new_game():
   new_game_text.penup()
   new_game_text.hideturtle()
   new_game_text.goto(0, 400)
-  new_game_text.write("Game Mode:", align="center", font=("Arial", 30, "normal"))
+  new_game_text.write("Game Mode:", align="center", font=("Arial", 30, "bold"))
   #
   new_game_text.goto(300, 300)
-  new_game_text.write("Free For All", align="center", font=("Arial", 20, "normal"))
+  new_game_text.write("Free For All", align="center", font=("Arial", 20, "bold"))
   #
   new_game_text.goto(0, 300)
-  new_game_text.write("Co-Op Survival", align="center", font=("Arial", 20, "normal"))
+  new_game_text.write("Co-Op Survival", align="center", font=("Arial", 20, "bold"))
   #
   new_game_text.goto(-300, 300)
-  new_game_text.write("Custom", align="center", font=("Arial", 20, "normal"))
+  new_game_text.write("Custom", align="center", font=("Arial", 20, "bold"))
   #
   new_game_text.goto(0, 100)
-  new_game_text.write("Bots:", align="center", font=("Arial", 30, "normal"))
+  new_game_text.write("Bots:", align="center", font=("Arial", 30, "bold"))
   #
   new_game_text.goto(-200, 0)
-  new_game_text.write("1", align="center", font=("Arial", 20, "normal"))
+  new_game_text.write("1", align="center", font=("Arial", 20, "bold"))
   #
   new_game_text.goto(-100, 0)
-  new_game_text.write("2", align="center", font=("Arial", 20, "normal"))
+  new_game_text.write("2", align="center", font=("Arial", 20, "bold"))
   #
   new_game_text.goto(0, 0)
-  new_game_text.write("3", align="center", font=("Arial", 20, "normal"))
+  new_game_text.write("3", align="center", font=("Arial", 20, "bold"))
   #
   new_game_text.goto(100, 0)
-  new_game_text.write("4", align="center", font=("Arial", 20, "normal"))
+  new_game_text.write("4", align="center", font=("Arial", 20, "bold"))
   #
   new_game_text.goto(200, 0)
-  new_game_text.write("5", align="center", font=("Arial", 20, "normal"))
+  new_game_text.write("5", align="center", font=("Arial", 20, "bold"))
   #
   turtle.update()
   turtle.tracer(1, 10)
@@ -343,35 +381,35 @@ def new_game():
 def redo_custom_text():
   global new_game_text
   new_game_text.goto(-300, 300)
-  new_game_text.write("Custom", align="center", font=("Arial", 20, "normal"))
+  new_game_text.write("Custom", align="center", font=("Arial", 20, "bold"))
 
 def redo_coop_text():
   global new_game_text
   new_game_text.goto(0, 300)
-  new_game_text.write("Co-Op Survival", align="center", font=("Arial", 20, "normal"))
+  new_game_text.write("Co-Op Survival", align="center", font=("Arial", 20, "bold"))
 
 def redo_f4a_text():
   global new_game_text
   new_game_text.goto(300, 300)
-  new_game_text.write("Free For All", align="center", font=("Arial", 20, "normal"))
+  new_game_text.write("Free For All", align="center", font=("Arial", 20, "bold"))
 
 def redo_bot_text(thing):
   global new_game_text
   if thing == 1:
     new_game_text.goto(-200, 0)
-    new_game_text.write("1", align="center", font=("Arial", 20, "normal"))
+    new_game_text.write("1", align="center", font=("Arial", 20, "bold"))
   elif thing == 2:
     new_game_text.goto(-100, 0)
-    new_game_text.write("2", align="center", font=("Arial", 20, "normal"))
+    new_game_text.write("2", align="center", font=("Arial", 20, "bold"))
   elif thing == 3:
     new_game_text.goto(0, 0)
-    new_game_text.write("3", align="center", font=("Arial", 20, "normal"))
+    new_game_text.write("3", align="center", font=("Arial", 20, "bold"))
   elif thing == 4:
     new_game_text.goto(100, 0)
-    new_game_text.write("4", align="center", font=("Arial", 20, "normal"))
+    new_game_text.write("4", align="center", font=("Arial", 20, "bold"))
   elif thing == 5:
     new_game_text.goto(200, 0)
-    new_game_text.write("5", align="center", font=("Arial", 20, "normal"))
+    new_game_text.write("5", align="center", font=("Arial", 20, "bold"))
 
 def coop_select():
   global coop_selected, custom_selected, coop_selected_square, f4a_selected
@@ -380,7 +418,7 @@ def coop_select():
   turtle.tracer(0, 0)
   coop_selected_square = turtle.Turtle()
   coop_selected_square.speed(0)
-  coop_selected_square.color(BRIGHT_YELLOW)
+  coop_selected_square.color('black')
   coop_selected_square.penup()
   coop_selected_square.goto(-115, 300)
   coop_selected_square.pendown()
@@ -390,6 +428,7 @@ def coop_select():
     coop_selected_square.left(90)
     coop_selected_square.forward(30)
     coop_selected_square.left(90)
+  coop_selected_square.color(BRIGHT_YELLOW)
   coop_selected_square.end_fill()
   coop_selected_square.hideturtle()
   coop_selected_square.penup()
@@ -402,18 +441,19 @@ def coop_select():
     #
     custom_square = turtle.Turtle()
     custom_square.speed(0)
-    custom_square.color('blue')
+    custom_square.color('black')
     custom_square.penup()
-    custom_square.goto(-350, 300)
+    custom_square.goto(-360, 300)
     custom_square.pendown()
     custom_square.begin_fill()
     #
     for _ in range(2):
-      custom_square.forward(100)
+      custom_square.forward(120)
       custom_square.left(90)
       custom_square.forward(30)
       custom_square.left(90)
     #
+    custom_square.color('blue')
     custom_square.end_fill()
     custom_square.hideturtle()
     custom_square.penup()
@@ -425,7 +465,7 @@ def coop_select():
     free_selected_square.clear()
     freefor_all_square = turtle.Turtle()
     freefor_all_square.speed(0)
-    freefor_all_square.color("blue")
+    freefor_all_square.color("black")
     freefor_all_square.penup()
     freefor_all_square.goto(185, 300)
     freefor_all_square.pendown()
@@ -435,13 +475,13 @@ def coop_select():
       freefor_all_square.left(90)
       freefor_all_square.forward(30)
       freefor_all_square.left(90)
+    freefor_all_square.color('blue')
     freefor_all_square.end_fill()
     freefor_all_square.hideturtle()
     freefor_all_square.penup()
     redo_f4a_text()
     turtle.update()
     turtle.tracer(1, 10)
-  
 
 def custom_select():
   global coop_selected, custom_selected, custom_selected_square
@@ -450,16 +490,17 @@ def custom_select():
   turtle.tracer(0, 0)
   custom_selected_square = turtle.Turtle()
   custom_selected_square.speed(0)
-  custom_selected_square.color(BRIGHT_YELLOW)
+  custom_selected_square.color('black')
   custom_selected_square.penup()
-  custom_selected_square.goto(-350, 300)
+  custom_selected_square.goto(-360, 300)
   custom_selected_square.pendown()
   custom_selected_square.begin_fill()
   for _ in range(2):
-    custom_selected_square.forward(100)
+    custom_selected_square.forward(120)
     custom_selected_square.left(90)
     custom_selected_square.forward(30)
     custom_selected_square.left(90)
+  custom_selected_square.color(BRIGHT_YELLOW)
   custom_selected_square.end_fill()
   custom_selected_square.penup()
   custom_selected_square.hideturtle()
@@ -475,7 +516,7 @@ def custom_select():
     coop_selected_square.clear()
     #
     coop_square.speed(0)
-    coop_square.color("blue")
+    coop_square.color("black")
     coop_square.penup()
     coop_square.goto(-115, 300)
     coop_square.pendown()
@@ -487,6 +528,7 @@ def custom_select():
       coop_square.forward(30)
       coop_square.left(90)
     #
+    coop_square.color('blue')
     coop_square.end_fill()
     coop_square.hideturtle()
     coop_square.penup()
@@ -498,7 +540,7 @@ def custom_select():
     free_selected_square.clear()
     freefor_all_square = turtle.Turtle()
     freefor_all_square.speed(0)
-    freefor_all_square.color("blue")
+    freefor_all_square.color("black")
     freefor_all_square.penup()
     freefor_all_square.goto(185, 300)
     freefor_all_square.pendown()
@@ -508,6 +550,7 @@ def custom_select():
       freefor_all_square.left(90)
       freefor_all_square.forward(30)
       freefor_all_square.left(90)
+    freefor_all_square.color('blue')
     freefor_all_square.end_fill()
     freefor_all_square.hideturtle()
     freefor_all_square.penup()
@@ -547,7 +590,7 @@ def custom_select_1():
   custom_select_1_draw_write_thing.penup()
   redo_custom_select_1_text("x")
   #
-  custom_select_1_draw_write_thing.color('black')
+  custom_select_1_draw_write_thing.color('white')
   custom_select_1_draw_write_thing.goto(-425, 450)
   custom_select_1_draw_write_thing.pendown()
   custom_select_1_draw_write_thing.begin_fill()
@@ -556,12 +599,13 @@ def custom_select_1():
     custom_select_1_draw_write_thing.right(90)
     custom_select_1_draw_write_thing.forward(900)
     custom_select_1_draw_write_thing.right(90)
+  custom_select_1_draw_write_thing.color('black')
   custom_select_1_draw_write_thing.end_fill()
   custom_select_1_draw_write_thing.penup()
   #
   custom_select_1_draw_write_thing.color('white')
   custom_select_1_draw_write_thing.goto(0, 400)
-  custom_select_1_draw_write_thing.write('Custom Game Mode', align="center", font=("Arial", 20, "normal"))
+  custom_select_1_draw_write_thing.write('Custom Game Mode', align="center", font=("Arial", 20, "bold"))
   #
   custom_select_1_draw_write_thing.goto(-350, 390)
   custom_select_1_draw_write_thing.pendown()
@@ -598,10 +642,10 @@ def custom_select_1():
   custom_select_1_draw_write_thing.write('Score', align="center", font=("Arial", 20, "normal"))
   #
   custom_select_1_draw_write_thing.goto(0, 300)
-  custom_select_1_draw_write_thing.write('Nations Allowed', align="center", font=('Arial', 20, 'normal'))
+  custom_select_1_draw_write_thing.write('Nations Allowed', align="center", font=('Arial', 20, 'bold'))
   #
   custom_select_1_draw_write_thing.goto(0, 200)
-  custom_select_1_draw_write_thing.write('Difficulty', align="center", font=("Arial", 20, 'normal'))
+  custom_select_1_draw_write_thing.write('Difficulty', align="center", font=("Arial", 20, 'bold'))
   #
   custom_select_1_draw_write_thing.goto(-300, 150)
   custom_select_1_draw_write_thing.write('Easy', align='center', font=('Arial', 20, 'normal'))
@@ -613,22 +657,29 @@ def custom_select_1():
   custom_select_1_draw_write_thing.write('Hard', align='center', font=('Arial', 20, 'normal'))
   #
   custom_select_1_draw_write_thing.goto(0, 100)
-  custom_select_1_draw_write_thing.write('Map Type', align="center", font=("Arial", 20, "normal"))
+  custom_select_1_draw_write_thing.write('Map Type', align="center", font=("Arial", 20, "bold"))
   #
   custom_select_1_draw_write_thing.goto(0, 0)
-  custom_select_1_draw_write_thing.write('Map Size', align='center', font=('Arial', 20, 'normal'))
+  custom_select_1_draw_write_thing.write('Map Size', align='center', font=('Arial', 20, 'bold'))
+  #
   turtle.update()
   turtle.tracer(1, 10)
 
 def free_4_all_select():
+  """The function called when free for all is selected in the new game menu.
+  #
+  Dev Notes: For some reason unbeknownst to me, it is not cooperating to make the black outline around the selected box like the other functions
+  #
+  Dev Notes: The reason was because the .pendown() function was not called lmao"""
   global coop_selected, custom_selected, f4a_selected, free_selected_square
   turtle.tracer(0, 0)
   f4a_selected = 1
   free_selected_square = turtle.Turtle()
   free_selected_square.speed(0)
-  free_selected_square.color(BRIGHT_YELLOW)
+  free_selected_square.color('black')
   free_selected_square.penup()
   free_selected_square.goto(185, 298)
+  free_selected_square.pendown()
   free_selected_square.begin_fill()
   #
   for _ in range(2):
@@ -636,6 +687,7 @@ def free_4_all_select():
     free_selected_square.left(90)
     free_selected_square.forward(35)
     free_selected_square.left(90)
+  free_selected_square.color(BRIGHT_YELLOW)
   free_selected_square.end_fill()
   free_selected_square.penup()
   free_selected_square.hideturtle()
@@ -651,7 +703,7 @@ def free_4_all_select():
     coop_selected_square.clear()
     #
     coop_square.speed(0)
-    coop_square.color("blue")
+    coop_square.color("black")
     coop_square.penup()
     coop_square.goto(-115, 300)
     coop_square.pendown()
@@ -663,6 +715,7 @@ def free_4_all_select():
       coop_square.forward(30)
       coop_square.left(90)
     #
+    coop_square.color('blue')
     coop_square.end_fill()
     coop_square.hideturtle()
     coop_square.penup()
@@ -677,18 +730,19 @@ def free_4_all_select():
     #
     custom_square = turtle.Turtle()
     custom_square.speed(0)
-    custom_square.color('blue')
+    custom_square.color('black')
     custom_square.penup()
-    custom_square.goto(-350, 300)
+    custom_square.goto(-360, 300)
     custom_square.pendown()
     custom_square.begin_fill()
     #
     for _ in range(2):
-      custom_square.forward(100)
+      custom_square.forward(120)
       custom_square.left(90)
       custom_square.forward(30)
       custom_square.left(90)
     #
+    custom_square.color('blue')
     custom_square.end_fill()
     custom_square.hideturtle()
     custom_square.penup()
@@ -705,7 +759,7 @@ def bot_1_select():
   #
   bot1selectedsquare = turtle.Turtle()
   bot1selectedsquare.speed(0)
-  bot1selectedsquare.color(BRIGHT_YELLOW)
+  bot1selectedsquare.color('black')
   bot1selectedsquare.penup()
   bot1selectedsquare.goto(-215, 0)
   bot1selectedsquare.pendown()
@@ -715,6 +769,7 @@ def bot_1_select():
     bot1selectedsquare.left(90)
     bot1selectedsquare.forward(30)
     bot1selectedsquare.left(90)
+  bot1selectedsquare.color(BRIGHT_YELLOW)
   bot1selectedsquare.end_fill()
   bot1selectedsquare.hideturtle()
   bot1selectedsquare.penup()
@@ -724,7 +779,7 @@ def bot_1_select():
     bot2selectedsquare.clear()
     bot_2_square = turtle.Turtle()
     bot_2_square.speed(0)
-    bot_2_square.color('blue')
+    bot_2_square.color('black')
     bot_2_square.penup()
     bot_2_square.goto(-115, 0)
     bot_2_square.pendown()
@@ -734,6 +789,7 @@ def bot_1_select():
       bot_2_square.left(90)
       bot_2_square.forward(30)
       bot_2_square.left(90)
+    bot_2_square.color('blue')
     bot_2_square.end_fill()
     bot_2_square.penup()
     bot_2_square.hideturtle()
@@ -743,7 +799,7 @@ def bot_1_select():
     bot3selectedsquare.clear()
     bot_3_square = turtle.Turtle()
     bot_3_square.speed(0)
-    bot_3_square.color('blue')
+    bot_3_square.color('black')
     bot_3_square.penup()
     bot_3_square.goto(-15, 0)
     bot_3_square.pendown()
@@ -753,6 +809,7 @@ def bot_1_select():
       bot_3_square.left(90)
       bot_3_square.forward(30)
       bot_3_square.left(90)
+    bot_3_square.color('blue')
     bot_3_square.end_fill()
     bot_3_square.hideturtle()
     bot_3_square.penup()
@@ -762,7 +819,7 @@ def bot_1_select():
     bot4selectedsquare.clear()
     bot_4_square = turtle.Turtle()
     bot_4_square.speed(0)
-    bot_4_square.color('blue')
+    bot_4_square.color('black')
     bot_4_square.penup()
     bot_4_square.goto(85, 0)
     bot_4_square.pendown()
@@ -772,6 +829,7 @@ def bot_1_select():
       bot_4_square.left(90)
       bot_4_square.forward(30)
       bot_4_square.left(90)
+    bot_4_square.color('blue')
     bot_4_square.end_fill()
     bot_4_square.hideturtle()
     bot_4_square.penup()
@@ -781,7 +839,7 @@ def bot_1_select():
     bot5selectedsquare.clear()
     bot_5_square = turtle.Turtle()
     bot_5_square.speed(0)
-    bot_5_square.color('blue')
+    bot_5_square.color('black')
     bot_5_square.penup()
     bot_5_square.goto(185, 0)
     bot_5_square.pendown()
@@ -791,13 +849,13 @@ def bot_1_select():
       bot_5_square.left(90)
       bot_5_square.forward(30)
       bot_5_square.left(90)
+    bot_5_square.color('blue')
     bot_5_square.end_fill()
     bot_5_square.hideturtle()
     bot_5_square.penup()
     redo_bot_text(5)
   turtle.update()
   turtle.tracer(1, 10)
-
 
 def bot_2_select():
   global bot_1_selected, bot_2_selected, bot_3_selected, bot_4_selected, bot_5_selected, bot2selectedsquare
@@ -808,7 +866,7 @@ def bot_2_select():
   #
   bot2selectedsquare = turtle.Turtle()
   bot2selectedsquare.speed(0)
-  bot2selectedsquare.color(BRIGHT_YELLOW)
+  bot2selectedsquare.color('black')
   bot2selectedsquare.penup()
   bot2selectedsquare.goto(-115, 0)
   bot2selectedsquare.pendown()
@@ -818,6 +876,7 @@ def bot_2_select():
     bot2selectedsquare.left(90)
     bot2selectedsquare.forward(30)
     bot2selectedsquare.left(90)
+  bot2selectedsquare.color(BRIGHT_YELLOW)
   bot2selectedsquare.end_fill()
   bot2selectedsquare.penup()
   bot2selectedsquare.hideturtle()
@@ -827,7 +886,7 @@ def bot_2_select():
     bot1selectedsquare.clear()
     bot_1_square = turtle.Turtle()
     bot_1_square.speed(0)
-    bot_1_square.color("blue")
+    bot_1_square.color("black")
     bot_1_square.penup()
     bot_1_square.goto(-215, 0)
     bot_1_square.pendown()
@@ -837,6 +896,7 @@ def bot_2_select():
       bot_1_square.left(90)
       bot_1_square.forward(30)
       bot_1_square.left(90)
+    bot_1_square.color('blue')
     bot_1_square.end_fill()
     bot_1_square.hideturtle()
     bot_1_square.penup()
@@ -846,7 +906,7 @@ def bot_2_select():
     bot3selectedsquare.clear()
     bot_3_square = turtle.Turtle()
     bot_3_square.speed(0)
-    bot_3_square.color('blue')
+    bot_3_square.color('black')
     bot_3_square.penup()
     bot_3_square.goto(-15, 0)
     bot_3_square.pendown()
@@ -856,6 +916,7 @@ def bot_2_select():
       bot_3_square.left(90)
       bot_3_square.forward(30)
       bot_3_square.left(90)
+    bot_3_square.color('blue')
     bot_3_square.end_fill()
     bot_3_square.hideturtle()
     bot_3_square.penup()
@@ -865,7 +926,7 @@ def bot_2_select():
     bot4selectedsquare.clear()
     bot_4_square = turtle.Turtle()
     bot_4_square.speed(0)
-    bot_4_square.color('blue')
+    bot_4_square.color('black')
     bot_4_square.penup()
     bot_4_square.goto(85, 0)
     bot_4_square.pendown()
@@ -875,6 +936,7 @@ def bot_2_select():
       bot_4_square.left(90)
       bot_4_square.forward(30)
       bot_4_square.left(90)
+    bot_4_square.color('blue')
     bot_4_square.end_fill()
     bot_4_square.hideturtle()
     bot_4_square.penup()
@@ -884,7 +946,7 @@ def bot_2_select():
     bot5selectedsquare.clear()
     bot_5_square = turtle.Turtle()
     bot_5_square.speed(0)
-    bot_5_square.color('blue')
+    bot_5_square.color('black')
     bot_5_square.penup()
     bot_5_square.goto(185, 0)
     bot_5_square.pendown()
@@ -894,6 +956,7 @@ def bot_2_select():
       bot_5_square.left(90)
       bot_5_square.forward(30)
       bot_5_square.left(90)
+    bot_5_square.color('blue')
     bot_5_square.end_fill()
     bot_5_square.hideturtle()
     bot_5_square.penup()
@@ -908,7 +971,7 @@ def bot_3_select():
   bot_3_square.clear()
   bot3selectedsquare = turtle.Turtle()
   bot3selectedsquare.speed(0)
-  bot3selectedsquare.color(BRIGHT_YELLOW)
+  bot3selectedsquare.color('black')
   bot3selectedsquare.penup()
   bot3selectedsquare.goto(-15, 0)
   bot3selectedsquare.pendown()
@@ -918,6 +981,7 @@ def bot_3_select():
     bot3selectedsquare.left(90)
     bot3selectedsquare.forward(30)
     bot3selectedsquare.left(90)
+  bot3selectedsquare.color(BRIGHT_YELLOW)
   bot3selectedsquare.end_fill()
   bot3selectedsquare.hideturtle()
   bot3selectedsquare.penup()
@@ -927,7 +991,7 @@ def bot_3_select():
     bot1selectedsquare.clear()
     bot_1_square = turtle.Turtle()
     bot_1_square.speed(0)
-    bot_1_square.color("blue")
+    bot_1_square.color("black")
     bot_1_square.penup()
     bot_1_square.goto(-215, 0)
     bot_1_square.pendown()
@@ -937,6 +1001,7 @@ def bot_3_select():
       bot_1_square.left(90)
       bot_1_square.forward(30)
       bot_1_square.left(90)
+    bot_1_square.color('blue')
     bot_1_square.end_fill()
     bot_1_square.hideturtle()
     bot_1_square.penup()
@@ -946,7 +1011,7 @@ def bot_3_select():
     bot2selectedsquare.clear()
     bot_2_square = turtle.Turtle()
     bot_2_square.speed(0)
-    bot_2_square.color('blue')
+    bot_2_square.color('black')
     bot_2_square.penup()
     bot_2_square.goto(-115, 0)
     bot_2_square.pendown()
@@ -956,6 +1021,7 @@ def bot_3_select():
       bot_2_square.left(90)
       bot_2_square.forward(30)
       bot_2_square.left(90)
+    bot_2_square.color('blue')
     bot_2_square.end_fill()
     bot_2_square.penup()
     bot_2_square.hideturtle()
@@ -965,7 +1031,7 @@ def bot_3_select():
     bot4selectedsquare.clear()
     bot_4_square = turtle.Turtle()
     bot_4_square.speed(0)
-    bot_4_square.color('blue')
+    bot_4_square.color('black')
     bot_4_square.penup()
     bot_4_square.goto(85, 0)
     bot_4_square.pendown()
@@ -975,6 +1041,7 @@ def bot_3_select():
       bot_4_square.left(90)
       bot_4_square.forward(30)
       bot_4_square.left(90)
+    bot_4_square.color('blue')
     bot_4_square.end_fill()
     bot_4_square.hideturtle()
     bot_4_square.penup()
@@ -984,7 +1051,7 @@ def bot_3_select():
     bot5selectedsquare.clear()
     bot_5_square = turtle.Turtle()
     bot_5_square.speed(0)
-    bot_5_square.color('blue')
+    bot_5_square.color('black')
     bot_5_square.penup()
     bot_5_square.goto(185, 0)
     bot_5_square.pendown()
@@ -994,6 +1061,7 @@ def bot_3_select():
       bot_5_square.left(90)
       bot_5_square.forward(30)
       bot_5_square.left(90)
+    bot_5_square.color('blue')
     bot_5_square.end_fill()
     bot_5_square.hideturtle()
     bot_5_square.penup()
@@ -1008,7 +1076,7 @@ def bot_4_select():
   bot_4_square.clear()
   bot4selectedsquare = turtle.Turtle()
   bot4selectedsquare.speed(0)
-  bot4selectedsquare.color(BRIGHT_YELLOW)
+  bot4selectedsquare.color('black')
   bot4selectedsquare.penup()
   bot4selectedsquare.goto(85, 0)
   bot4selectedsquare.pendown()
@@ -1018,6 +1086,7 @@ def bot_4_select():
     bot4selectedsquare.left(90)
     bot4selectedsquare.forward(30)
     bot4selectedsquare.left(90)
+  bot4selectedsquare.color(BRIGHT_YELLOW)
   bot4selectedsquare.end_fill()
   bot4selectedsquare.hideturtle()
   bot4selectedsquare.penup()
@@ -1027,7 +1096,7 @@ def bot_4_select():
     bot1selectedsquare.clear()
     bot_1_square = turtle.Turtle()
     bot_1_square.speed(0)
-    bot_1_square.color("blue")
+    bot_1_square.color("black")
     bot_1_square.penup()
     bot_1_square.goto(-215, 0)
     bot_1_square.pendown()
@@ -1037,6 +1106,7 @@ def bot_4_select():
       bot_1_square.left(90)
       bot_1_square.forward(30)
       bot_1_square.left(90)
+    bot_1_square.color('blue')
     bot_1_square.end_fill()
     bot_1_square.hideturtle()
     bot_1_square.penup()
@@ -1046,7 +1116,7 @@ def bot_4_select():
     bot2selectedsquare.clear()
     bot_2_square = turtle.Turtle()
     bot_2_square.speed(0)
-    bot_2_square.color('blue')
+    bot_2_square.color('black')
     bot_2_square.penup()
     bot_2_square.goto(-115, 0)
     bot_2_square.pendown()
@@ -1056,6 +1126,7 @@ def bot_4_select():
       bot_2_square.left(90)
       bot_2_square.forward(30)
       bot_2_square.left(90)
+    bot_2_square.color('blue')
     bot_2_square.end_fill()
     bot_2_square.penup()
     bot_2_square.hideturtle()
@@ -1065,7 +1136,7 @@ def bot_4_select():
     bot3selectedsquare.clear()
     bot_3_square = turtle.Turtle()
     bot_3_square.speed(0)
-    bot_3_square.color('blue')
+    bot_3_square.color('black')
     bot_3_square.penup()
     bot_3_square.goto(-15, 0)
     bot_3_square.pendown()
@@ -1075,6 +1146,7 @@ def bot_4_select():
       bot_3_square.left(90)
       bot_3_square.forward(30)
       bot_3_square.left(90)
+    bot_3_square.color('blue')
     bot_3_square.end_fill()
     bot_3_square.hideturtle()
     bot_3_square.penup()
@@ -1084,7 +1156,7 @@ def bot_4_select():
     bot5selectedsquare.clear()
     bot_5_square = turtle.Turtle()
     bot_5_square.speed(0)
-    bot_5_square.color('blue')
+    bot_5_square.color('black')
     bot_5_square.penup()
     bot_5_square.goto(185, 0)
     bot_5_square.pendown()
@@ -1094,6 +1166,7 @@ def bot_4_select():
       bot_5_square.left(90)
       bot_5_square.forward(30)
       bot_5_square.left(90)
+    bot_5_square.color('blue')
     bot_5_square.end_fill()
     bot_5_square.hideturtle()
     bot_5_square.penup()
@@ -1108,7 +1181,7 @@ def bot_5_select():
   bot_5_square.clear()
   bot5selectedsquare = turtle.Turtle()
   bot5selectedsquare.speed(0)
-  bot5selectedsquare.color(BRIGHT_YELLOW)
+  bot5selectedsquare.color('black')
   bot5selectedsquare.penup()
   bot5selectedsquare.goto(185, 0)
   bot5selectedsquare.pendown()
@@ -1118,6 +1191,7 @@ def bot_5_select():
     bot5selectedsquare.left(90)
     bot5selectedsquare.forward(30)
     bot5selectedsquare.left(90)
+  bot5selectedsquare.color(BRIGHT_YELLOW)
   bot5selectedsquare.end_fill()
   bot5selectedsquare.hideturtle()
   bot5selectedsquare.penup()
@@ -1127,7 +1201,7 @@ def bot_5_select():
     bot1selectedsquare.clear()
     bot_1_square = turtle.Turtle()
     bot_1_square.speed(0)
-    bot_1_square.color("blue")
+    bot_1_square.color("black")
     bot_1_square.penup()
     bot_1_square.goto(-215, 0)
     bot_1_square.pendown()
@@ -1137,6 +1211,7 @@ def bot_5_select():
       bot_1_square.left(90)
       bot_1_square.forward(30)
       bot_1_square.left(90)
+    bot_1_square.color('blue')
     bot_1_square.end_fill()
     bot_1_square.hideturtle()
     bot_1_square.penup()
@@ -1146,7 +1221,7 @@ def bot_5_select():
     bot2selectedsquare.clear()
     bot_2_square = turtle.Turtle()
     bot_2_square.speed(0)
-    bot_2_square.color('blue')
+    bot_2_square.color('black')
     bot_2_square.penup()
     bot_2_square.goto(-115, 0)
     bot_2_square.pendown()
@@ -1156,6 +1231,7 @@ def bot_5_select():
       bot_2_square.left(90)
       bot_2_square.forward(30)
       bot_2_square.left(90)
+    bot_2_square.color('blue')
     bot_2_square.end_fill()
     bot_2_square.penup()
     bot_2_square.hideturtle()
@@ -1165,7 +1241,7 @@ def bot_5_select():
     bot3selectedsquare.clear()
     bot_3_square = turtle.Turtle()
     bot_3_square.speed(0)
-    bot_3_square.color('blue')
+    bot_3_square.color('black')
     bot_3_square.penup()
     bot_3_square.goto(-15, 0)
     bot_3_square.pendown()
@@ -1175,6 +1251,7 @@ def bot_5_select():
       bot_3_square.left(90)
       bot_3_square.forward(30)
       bot_3_square.left(90)
+    bot_3_square.color('blue')
     bot_3_square.end_fill()
     bot_3_square.hideturtle()
     bot_3_square.penup()
@@ -1184,7 +1261,7 @@ def bot_5_select():
     bot4selectedsquare.clear()
     bot_4_square = turtle.Turtle()
     bot_4_square.speed(0)
-    bot_4_square.color('blue')
+    bot_4_square.color('black')
     bot_4_square.penup()
     bot_4_square.goto(85, 0)
     bot_4_square.pendown()
@@ -1194,6 +1271,7 @@ def bot_5_select():
       bot_4_square.left(90)
       bot_4_square.forward(30)
       bot_4_square.left(90)
+    bot_4_square.color('blue')
     bot_4_square.end_fill()
     bot_4_square.hideturtle()
     bot_4_square.penup()
@@ -1241,9 +1319,16 @@ def click_thing(x, y):
   elif new_game_screen_on == 0 and in_custom_menu == 1:
     if -533 <= x <= -472 and 385 <= y <= 446:
       print("DEBUG", "|", "Exiting Custom Menu")
+      custom_select_1_draw_write_thing.clear()
+      in_custom_menu = 0
+      new_game_screen_on = 1
+      
+
+
 
 
 starting_screen()
+
 
 screen.onscreenclick(click_thing)
 
