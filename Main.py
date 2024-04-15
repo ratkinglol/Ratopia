@@ -16,12 +16,16 @@ screenTk.attributes("-fullscreen", True)
 screen.bgcolor("pink")
 screen.title("Ratopia V0.0.0")
 
-ctrl_key_press = 1
+
 
 
 custom_selected = 0
 coop_selected = 0
 f4a_selected = 0
+
+infinity_selected = 0
+war_selected = 0
+score_selected = 0
 
 in_custom_menu = 0
 
@@ -31,25 +35,50 @@ bot_3_selected = 0
 bot_4_selected = 0
 bot_5_selected = 0
 
-def key_1_1():
-  pass
+def f1_key():
+  console_command()
 
 def key_1():
-  global ctrl_key_press
-  if ctrl_key_press == 1:
-    print("DEBUG", "|", "Console Command")
-    console_command()
-  elif ctrl_key_press == 0:
-    print("DEBUG", "|", "Control Not Pressed While 1 Pressed")
+  pass
 
-def ctrl_key1():
-  global ctrl_key_press
-  ctrl_key_press = 0
 
 def ctrl_key():
-  global ctrl_key_press
-  ctrl_key_press = 1
+  print('ctrl pressed')
 
+def esc_key():
+  global custom_selected, f4a_selected, coop_selected, bot_1_selected, bot_2_selected, bot_3_selected, bot_4_selected, bot_5_selected, starting_screen_on
+  if settings_screen == 1:
+    settings_text.clear()
+    #
+    starting_screen_on = 1
+    #
+    starting_screen()
+  elif starting_screen_on == 1:
+    print('no')
+  elif new_game_screen_on == 1:
+    custom_selected = 0
+    coop_selected = 0
+    f4a_selected = 0
+    bot_1_selected = 0
+    bot_2_selected = 0
+    bot_3_selected = 0
+    bot_4_selected = 0
+    bot_5_selected = 0
+    starting_screen_on = 1
+    #
+    new_game_text.clear()
+    #
+    normal_clear()
+    #
+    selected_clear()
+    #
+    starting_screen()
+    if starting_screen_on == 1:
+      pass
+    else:
+      normal_clear()
+      selected_clear()
+      starting_screen()
 
 def console_command():
   "The function that controls the console command logic"
@@ -81,9 +110,105 @@ def console_command():
   elif thingy.lower() == "server":
     server_console_command = turtle.textinput("", "Code to communicate with server")
     com_with_server(server_console_command)
+    turtle.onkey(key_1, '1')
+    turtle.onkey(ctrl_key, 'Control_L')
+  elif thingy.lower() == "close" or thingy.lower() == "exit":
+    exit()
+  elif thingy.lower() == "todo list" or thingy.lower() == "to-do list" or thingy.lower() == "to do list":
+    todo_list = turtle.textinput('', '1. Finish Custom Game Mode Creation | 2. Add the settings menu')
+    turtle.onkey(f1_key, 'F1')
+    turtle.listen()
+
+def normal_clear():
+  turtle.tracer(0, 0)
+  try:
+    coop_square.clear()
+  except:
+    pass
+  print("DEBUG", "|", "normal_clear() past first clear")
+  try:
+    custom_square.clear()
+  except:
+    pass
+  print("DEBUG", "|", "normal_clear() past second clear")
+  try:
+    freefor_all_square.clear()
+  except:
+    pass
+  print("DEBUG", "|", "normal_clear() past third clear")
+  try:
+    bot_1_square.clear()
+  except:
+    pass
+  print("DEBUG", "|", "normal_clear() past fourth clear")
+  try:
+    bot_2_square.clear()
+  except:
+    pass
+  try:
+    bot_3_square.clear()
+  except:
+    pass
+  try:
+    bot_4_square.clear()
+  except:
+    pass
+  try:
+    bot_5_square.clear()
+  except:
+    pass
+  done1 = 'normal done'
+  turtle.update()
+  turtle.tracer(1, 10)
+  return done1
+
+
+def selected_clear():
+  turtle.tracer(0, 0)
+  try:
+    coop_selected_square.clear()
+  except:
+    pass
+  print("DEBUG", "|", "selected_clear() past first clear")
+  try:
+    custom_selected_square.clear()
+  except:
+    pass
+  print("DEBUG", "|", "selected_clear() past second clear")
+  try:
+    free_selected_square.clear()
+  except:
+    pass
+  print("DEBUG", "|", "selected_clear() past third clear")
+  try:
+    bot1selectedsquare.clear()
+  except:
+    pass
+  print("DEBUG", "|", "selected_clear() past fourth clear")
+  try:
+    bot2selectedsquare.clear()
+  except:
+    pass
+  try:
+    bot3selectedsquare.clear()
+  except:
+    pass
+  try:
+    bot4selectedsquare.clear()
+  except:
+    pass
+  try:
+    bot5selectedsquare.clear()
+  except:
+    pass
+  turtle.update()
+  turtle.tracer(1, 10)
+  done = 'done'
+  return done
 
 starting_screen_on = 1
 new_game_screen_on = 0
+settings_screen = 0
 
 writing_tool = turtle.Turtle()
 writing_tool.speed(0)
@@ -92,6 +217,8 @@ writing_tool.penup()
 writing_tool.hideturtle()
 writing_tool.goto(0, 0)
 writing_tool.hideturtle()
+
+
 
 while True:
   if writing_tool.isvisible() == True:
@@ -102,7 +229,11 @@ while True:
 def com_with_server(code_for_server):
   """Function used to communicate with server, there are a few different codes for the server to process.
   
-  code 'test x', just a test code."""
+  CODES:
+
+  code 'test x', just a test code.
+  
+  code 'server.closeconnection()', closes connection with server"""
   try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((SERVER_IP, SERVER_PORT))
@@ -111,13 +242,19 @@ def com_with_server(code_for_server):
     s.send(code_for_server.encode())
     server_msg = s.recv(1024)
     print(server_msg)
+    if code_for_server.lower() == "server.closeconnection()" or code_for_server.lower() == "server.close()" or code_for_server == "server x":
+      server_msg = s.recv(1024)
+      print(server_msg)
   except socket.error:
-    print("Error")
+    print("Error Communicating With Server")
+    error_message = turtle.textinput("", "Error Communicating With Server")
     pass
   except:
+    print("Unknown Error")
+    error_message = turtle.textinput("", "Unknown Error")
     pass
 
-def write_console(x_c, y_c, text, size):
+def write_console(x_c : int, y_c : int, text, size : int):
   global writing_tool
   turtle.tracer(0, 0)
   writing_tool.goto(x_c, y_c)
@@ -131,7 +268,7 @@ def starting_screen():
   #
   New_Game_Square = turtle.Turtle()
   New_Game_Square.speed(0)
-  New_Game_Square.color("blue")
+  New_Game_Square.color("black")
   New_Game_Square.penup()
   New_Game_Square.goto(-90, 200)
   New_Game_Square.pendown()
@@ -141,13 +278,14 @@ def starting_screen():
     New_Game_Square.left(90)
     New_Game_Square.forward(40)
     New_Game_Square.left(90)
+  New_Game_Square.color('blue')
   New_Game_Square.end_fill()
   New_Game_Square.hideturtle()
   New_Game_Square.penup()
   #
   load_game_square = turtle.Turtle()
   load_game_square.speed(0)
-  load_game_square.color("blue")
+  load_game_square.color("black")
   load_game_square.penup()
   load_game_square.goto(-90, 0)
   load_game_square.pendown()
@@ -157,11 +295,13 @@ def starting_screen():
     load_game_square.left(90)
     load_game_square.forward(40)
     load_game_square.left(90)
+  load_game_square.color('blue')
   load_game_square.end_fill()
   load_game_square.hideturtle()
   load_game_square.penup()
   #
   load_game_square.goto(-90, -200)
+  load_game_square.color('black')
   load_game_square.pendown()
   load_game_square.begin_fill()
   for _ in range(2):
@@ -169,6 +309,7 @@ def starting_screen():
     load_game_square.left(90)
     load_game_square.forward(40)
     load_game_square.left(90)
+  load_game_square.color('blue')
   load_game_square.end_fill()
   load_game_square.hideturtle()
   load_game_square.penup()
@@ -198,8 +339,26 @@ def start_clear():
   New_Game_Square.clear()
   load_game_square.clear()
 
+def settings():
+  global settings_text, starting_screen_on, settings_screen
+  turtle.tracer(0, 0)
+  start_clear()
+  starting_screen_on = 0
+  settings_screen = 1
+  #
+  settings_text = turtle.Turtle()
+  settings_text.speed(0)
+  settings_text.color('black')
+  settings_text.penup()
+  settings_text.hideturtle()
+  settings_text.goto(-400, 400)
+  settings_text.write('Controls', align="center", font=("Arial", 20, "normal"))
+  #
+  settings_text.goto(-200, 400)
+  settings_text.write("Graphics", align="center", font=("Arial", 20, "normal"))
+
 def new_game():
-  global custom_square, new_game_text, coop_square, bot_1_square, bot_2_square, bot_3_square, bot_4_square, bot_5_square
+  global custom_square, new_game_text, coop_square, bot_1_square, bot_2_square, bot_3_square, bot_4_square, bot_5_square, freefor_all_square
   turtle.tracer(0, 0)
   #
   start_clear()
@@ -559,11 +718,38 @@ def custom_select():
   turtle.update()
   turtle.tracer(1, 10)
 
-def redo_custom_select_1_text(thing):
-  if thing == "x":
+def redo_custom_select_1_text(thing : str, selected : int):
+  if thing == "x" and selected == 0:
     custom_select_1_draw_write_thing.color('white')
     custom_select_1_draw_write_thing.goto(-500, 400)
     custom_select_1_draw_write_thing.write("X", align="center", font=("Arial", 20, "normal"))
+  elif thing == "infinity" and selected == 1:
+    custom_select_1_draw_write_thing.color('black')
+    custom_select_1_draw_write_thing.goto(-300, 350)
+    custom_select_1_draw_write_thing.write("Infinity", align="center", font=("Arial", 20, "normal"))
+    custom_select_1_draw_write_thing.color('white')
+  elif thing == "war" and selected == 1:
+    custom_select_1_draw_write_thing.color('black')
+    custom_select_1_draw_write_thing.goto(0, 350)
+    custom_select_1_draw_write_thing.write("War", align="center", font=("Arial", 20, "normal"))
+    custom_select_1_draw_write_thing.color('white')
+  elif thing == "score" and selected == 1:
+    custom_select_1_draw_write_thing.color('black')
+    custom_select_1_draw_write_thing.goto(300, 350)
+    custom_select_1_draw_write_thing.write("Score", align="center", font=("Arial", 20, "normal"))
+    custom_select_1_draw_write_thing.color('white')
+  elif thing == "infinity" and selected == 0:
+    custom_select_1_draw_write_thing.color('white')
+    custom_select_1_draw_write_thing.goto(-300, 350)
+    custom_select_1_draw_write_thing.write("Infinity", align="center", font=("Arial", 20, "normal"))
+  elif thing == "war" and selected == 0:
+    custom_select_1_draw_write_thing.color('white')
+    custom_select_1_draw_write_thing.goto(0, 350)
+    custom_select_1_draw_write_thing.write("War", align="center", font=("Arial", 20, "normal"))
+  elif thing == "score" and selected == 0:
+    custom_select_1_draw_write_thing.color('white')
+    custom_select_1_draw_write_thing.goto(300, 350)
+    custom_select_1_draw_write_thing.write('Score', align="center", font=("Arial", 20, "normal"))
 
 def custom_select_1():
   turtle.tracer(0, 0)
@@ -588,7 +774,7 @@ def custom_select_1():
   custom_select_1_draw_write_thing.circle(30)
   custom_select_1_draw_write_thing.end_fill()
   custom_select_1_draw_write_thing.penup()
-  redo_custom_select_1_text("x")
+  redo_custom_select_1_text("x", 0)
   #
   custom_select_1_draw_write_thing.color('white')
   custom_select_1_draw_write_thing.goto(-425, 450)
@@ -635,11 +821,38 @@ def custom_select_1():
   custom_select_1_draw_write_thing.goto(-300, 350)
   custom_select_1_draw_write_thing.write("Infinity", align="center", font=("Arial", 20, "normal"))
   #
+  custom_select_1_draw_write_thing.goto(-350, 350)
+  custom_select_1_draw_write_thing.pendown()
+  for _ in range(2):
+    custom_select_1_draw_write_thing.forward(100)
+    custom_select_1_draw_write_thing.left(90)
+    custom_select_1_draw_write_thing.forward(30)
+    custom_select_1_draw_write_thing.left(90)
+  custom_select_1_draw_write_thing.penup()
+  #
   custom_select_1_draw_write_thing.goto(0, 350)
   custom_select_1_draw_write_thing.write('War', align="center", font=("Arial", 20, "normal"))
   #
+  custom_select_1_draw_write_thing.goto(-40, 350)
+  custom_select_1_draw_write_thing.pendown()
+  for _ in range(2):
+    custom_select_1_draw_write_thing.forward(80)
+    custom_select_1_draw_write_thing.left(90)
+    custom_select_1_draw_write_thing.forward(30)
+    custom_select_1_draw_write_thing.left(90)
+  custom_select_1_draw_write_thing.penup()
+  #
   custom_select_1_draw_write_thing.goto(300, 350)
   custom_select_1_draw_write_thing.write('Score', align="center", font=("Arial", 20, "normal"))
+  #
+  custom_select_1_draw_write_thing.goto(250, 350)
+  custom_select_1_draw_write_thing.pendown()
+  for _ in range(2):
+    custom_select_1_draw_write_thing.forward(100)
+    custom_select_1_draw_write_thing.left(90)
+    custom_select_1_draw_write_thing.forward(30)
+    custom_select_1_draw_write_thing.left(90)
+  custom_select_1_draw_write_thing.penup()
   #
   custom_select_1_draw_write_thing.goto(0, 300)
   custom_select_1_draw_write_thing.write('Nations Allowed', align="center", font=('Arial', 20, 'bold'))
@@ -650,11 +863,38 @@ def custom_select_1():
   custom_select_1_draw_write_thing.goto(-300, 150)
   custom_select_1_draw_write_thing.write('Easy', align='center', font=('Arial', 20, 'normal'))
   #
+  custom_select_1_draw_write_thing.goto(-340, 150)
+  custom_select_1_draw_write_thing.pendown()
+  for _ in range(2):
+    custom_select_1_draw_write_thing.forward(80)
+    custom_select_1_draw_write_thing.left(90)
+    custom_select_1_draw_write_thing.forward(30)
+    custom_select_1_draw_write_thing.left(90)
+  custom_select_1_draw_write_thing.penup()
+  #
   custom_select_1_draw_write_thing.goto(0, 150)
   custom_select_1_draw_write_thing.write('Medium', align='center', font=('Arial', 20, 'normal'))
   #
+  custom_select_1_draw_write_thing.goto(-60, 150)
+  custom_select_1_draw_write_thing.pendown()
+  for _ in range(2):
+    custom_select_1_draw_write_thing.forward(120)
+    custom_select_1_draw_write_thing.left(90)
+    custom_select_1_draw_write_thing.forward(30)
+    custom_select_1_draw_write_thing.left(90)
+  custom_select_1_draw_write_thing.penup()
+  #
   custom_select_1_draw_write_thing.goto(300, 150)
   custom_select_1_draw_write_thing.write('Hard', align='center', font=('Arial', 20, 'normal'))
+  #
+  custom_select_1_draw_write_thing.goto(260, 150)
+  custom_select_1_draw_write_thing.pendown()
+  for _ in range(2):
+    custom_select_1_draw_write_thing.forward(80)
+    custom_select_1_draw_write_thing.left(90)
+    custom_select_1_draw_write_thing.forward(30)
+    custom_select_1_draw_write_thing.left(90)
+  custom_select_1_draw_write_thing.penup()
   #
   custom_select_1_draw_write_thing.goto(0, 100)
   custom_select_1_draw_write_thing.write('Map Type', align="center", font=("Arial", 20, "bold"))
@@ -1277,6 +1517,117 @@ def bot_5_select():
     bot_4_square.penup()
     redo_bot_text(4)
 
+def check_custom_logic(thing : str):
+  global war_selected, infinity_selected, score_selected
+  if thing.lower() == "war":
+    if war_selected == 1:
+      war_select_draw.clear()
+      war_selected = 0
+      redo_custom_select_1_text('war', 0)
+  elif thing.lower() == "infinity":
+    if infinity_selected == 1:
+      infinity_select_draw.clear()
+      infinity_selected = 0
+      redo_custom_select_1_text('infinity', 0)
+  elif thing.lower() == "score":
+    if score_selected == 1:
+      score_select_draw.clear()
+      score_selected = 0
+      redo_custom_select_1_text('score', 0)
+
+def infinity_select():
+  #elif -350 <= x <= -250 and 350 <= y <= 380:
+  global infinity_select_draw, infinity_selected
+  turtle.tracer(0, 0)
+  #
+  infinity_selected = 1
+  #
+  infinity_select_draw = turtle.Turtle()
+  infinity_select_draw.speed(0)
+  infinity_select_draw.color('white')
+  infinity_select_draw.penup()
+  infinity_select_draw.hideturtle()
+  infinity_select_draw.goto(-350, 350)
+  infinity_select_draw.pendown()
+  infinity_select_draw.begin_fill()
+  #
+  for _ in range(2):
+    infinity_select_draw.forward(100)
+    infinity_select_draw.left(90)
+    infinity_select_draw.forward(30)
+    infinity_select_draw.left(90)
+  #
+  infinity_select_draw.color(BRIGHT_YELLOW)
+  infinity_select_draw.end_fill()
+  infinity_select_draw.penup()
+  redo_custom_select_1_text('infinity', 1)
+  #
+  check_custom_logic('war')
+  check_custom_logic('score')
+  #
+  turtle.update()
+  turtle.tracer(1, 10)
+
+
+def war_select():
+  #elif -40 <= x <= 40 and 350 <= y <= 380:
+  global war_select_draw, war_selected
+  turtle.tracer(0, 0)
+  #
+  war_selected = 1
+  #
+  war_select_draw = turtle.Turtle()
+  war_select_draw.speed(0)
+  war_select_draw.color('white')
+  war_select_draw.penup()
+  war_select_draw.hideturtle()
+  war_select_draw.goto(-40, 350)
+  war_select_draw.pendown()
+  war_select_draw.begin_fill()
+  for _ in range(2):
+    war_select_draw.forward(80)
+    war_select_draw.left(90)
+    war_select_draw.forward(30)
+    war_select_draw.left(90)
+  #
+  war_select_draw.color(BRIGHT_YELLOW)
+  war_select_draw.end_fill()
+  war_select_draw.penup()
+  redo_custom_select_1_text('war', 1)
+  #
+  check_custom_logic('infinity')
+  check_custom_logic('score')
+  #
+  turtle.update()
+  turtle.tracer(1, 10)
+
+def score_select():
+  global score_select_draw, score_selected
+  turtle.tracer(0, 0)
+  score_selected = 1
+  score_select_draw = turtle.Turtle()
+  score_select_draw.speed(0)
+  score_select_draw.color('white')
+  score_select_draw.penup()
+  score_select_draw.hideturtle()
+  score_select_draw.goto(250, 350)
+  score_select_draw.pendown()
+  score_select_draw.begin_fill()
+  for _ in range(2):
+    score_select_draw.forward(100)
+    score_select_draw.left(90)
+    score_select_draw.forward(30)
+    score_select_draw.left(90)
+  score_select_draw.color(BRIGHT_YELLOW)
+  score_select_draw.end_fill()
+  score_select_draw.penup()
+  redo_custom_select_1_text('score', 1)
+  #
+  check_custom_logic('infinity')
+  check_custom_logic('war')
+  #
+  turtle.update()
+  turtle.tracer(1, 10)
 
 def click_thing(x, y):
   global starting_screen_on, new_game_screen_on, in_custom_menu #1
@@ -1291,6 +1642,7 @@ def click_thing(x, y):
       print("DEBUG", "|", "Load Game") #10
     elif -88 <= x <= 90 and -199 <= y <= -161:
       print("DEBUG", "|", "Settings")
+      settings()
   elif starting_screen_on == 0 and new_game_screen_on == 1:
     if -348 <= x <= -252 and 303 <= y <= 328:
       print("DEBUG", "|", "Custom") #15
@@ -1322,8 +1674,21 @@ def click_thing(x, y):
       custom_select_1_draw_write_thing.clear()
       in_custom_menu = 0
       new_game_screen_on = 1
-      
-
+      if war_selected == 1:
+        war_select_draw.clear()
+      elif infinity_selected == 1:
+        infinity_select_draw.clear()
+      elif score_selected == 1:
+        score_select_draw.clear()
+    elif -350 <= x <= -250 and 350 <= y <= 380:
+      print("DEBUG", "|", "Infinity Selected In Custom Menu")
+      infinity_select()
+    elif -40 <= x <= 40 and 350 <= y <= 380:
+      print("DEBUG", "|", "War Selected In Custom Menu")
+      war_select()
+    elif 250 <= x <= 350 and 350 <= y <= 380:
+      print("DEBUG", "|", "Score Selected In Custom Menu")
+      score_select()
 
 
 
@@ -1332,11 +1697,12 @@ starting_screen()
 
 screen.onscreenclick(click_thing)
 
-turtle.onkey(key_1, "1")
 
-turtle.onkeypress(ctrl_key, "Control_L")
-turtle.onkeyrelease(ctrl_key1, "Control_L")
 
+turtle.onkey(f1_key, 'F1')
+turtle.onkey(key_1, '1')
+turtle.onkey(ctrl_key, 'Control_L')
+turtle.onkey(esc_key, 'Escape')
 turtle.listen()
 
-turtle.mainloop()
+screen.mainloop()
