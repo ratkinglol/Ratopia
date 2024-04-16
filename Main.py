@@ -27,6 +27,11 @@ infinity_selected = 0
 war_selected = 0
 score_selected = 0
 
+easy_selected = 0
+medium_selected = 0
+hard_selected = 0 
+
+
 in_custom_menu = 0
 
 bot_1_selected = 0
@@ -46,16 +51,18 @@ def ctrl_key():
   print('ctrl pressed')
 
 def esc_key():
-  global custom_selected, f4a_selected, coop_selected, bot_1_selected, bot_2_selected, bot_3_selected, bot_4_selected, bot_5_selected, starting_screen_on
+  global custom_selected, f4a_selected, coop_selected, bot_1_selected, bot_2_selected, bot_3_selected, bot_4_selected, bot_5_selected, starting_screen_on, new_game_screen_on, settings_screen
   if settings_screen == 1:
     settings_text.clear()
     #
     starting_screen_on = 1
+    settings_screen = 0
     #
     starting_screen()
   elif starting_screen_on == 1:
     print('no')
   elif new_game_screen_on == 1:
+    new_game_screen_on = 0
     custom_selected = 0
     coop_selected = 0
     f4a_selected = 0
@@ -750,6 +757,21 @@ def redo_custom_select_1_text(thing : str, selected : int):
     custom_select_1_draw_write_thing.color('white')
     custom_select_1_draw_write_thing.goto(300, 350)
     custom_select_1_draw_write_thing.write('Score', align="center", font=("Arial", 20, "normal"))
+  elif thing == "easy" and selected == 1:
+    custom_select_1_draw_write_thing.color('black')
+    custom_select_1_draw_write_thing.goto(-300, 150)
+    custom_select_1_draw_write_thing.write("Easy", align="center", font=("Arial", 20, "normal"))
+    custom_select_1_draw_write_thing.color('white')
+  elif thing == "medium" and selected == 1:
+    custom_select_1_draw_write_thing.color('black')
+    custom_select_1_draw_write_thing.goto(0, 150)
+    custom_select_1_draw_write_thing.write("Medium", align="center", font=("Arial", 20, "normal"))
+    custom_select_1_draw_write_thing.color('white')
+  elif thing == "hard" and selected == 1:
+    custom_select_1_draw_write_thing.color('black')
+    custom_select_1_draw_write_thing.goto(300, 150)
+    custom_select_1_draw_write_thing.write("Hard", align="center", font=("Arial", 20, "normal"))
+    custom_select_1_draw_write_thing.color('white')
 
 def custom_select_1():
   turtle.tracer(0, 0)
@@ -1534,6 +1556,15 @@ def check_custom_logic(thing : str):
       score_select_draw.clear()
       score_selected = 0
       redo_custom_select_1_text('score', 0)
+  elif thing.lower() == "easy":
+    if easy_selected == 1:
+      easy_selected = 0
+  elif thing.lower() == "medium":
+    if medium_selected == 1:
+      medium_selected = 0
+  elif thing.lower() == "hard":
+    if hard_selected == 1:
+      hard_selected = 0
 
 def infinity_select():
   #elif -350 <= x <= -250 and 350 <= y <= 380:
@@ -1629,6 +1660,27 @@ def score_select():
   turtle.update()
   turtle.tracer(1, 10)
 
+def easy_select():
+  global easy_selected, easy_select_draw
+  turtle.tracer(1, 10)
+  easy_select_draw = turtle.Turtle()
+  easy_select_draw.speed(0)
+  easy_select_draw.color('white')
+  easy_select_draw.penup()
+  easy_select_draw.goto(-340, 150)
+  easy_select_draw.pendown()
+  easy_select_draw.begin_fill()
+  for _ in range(2):
+    easy_select_draw.forward(80)
+    easy_select_draw.left(90)
+    easy_select_draw.forward(30)
+    easy_select_draw.left(90)
+  easy_select_draw.color(BRIGHT_YELLOW)
+  easy_select_draw.end_fill()
+  turtle.update()
+  turtle.tracer(1, 10)
+
+
 def click_thing(x, y):
   global starting_screen_on, new_game_screen_on, in_custom_menu #1
   print("DEBUG", x, y) #2
@@ -1689,8 +1741,25 @@ def click_thing(x, y):
     elif 250 <= x <= 350 and 350 <= y <= 380:
       print("DEBUG", "|", "Score Selected In Custom Menu")
       score_select()
+    elif -340 <= x <= -260 and 150 <= y <= 180:
+      print("DEBUG", "|", "Easy Selected")
+    elif -60 <= x <= 60 and 150 <= y <= 180:
+      print("DEBUG", "|", "Medium Selected")
+    elif 260 <= x <= 340 and 150 <= y <= 180:
+      print("DEBUG", "|", "Hard Selected")
 
-
+class Troop():
+  def __init__(self):
+    self.trooptype = []
+    self.health = 10
+    self.pos = (0, 0)
+    self.level = 0
+    self.weapon = []
+    self.ismovable = True
+  #
+  class Troop_Logic():
+    def __init__(self):
+      pass
 
 starting_screen()
 
