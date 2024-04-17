@@ -2,7 +2,6 @@
 import turtle
 import requests
 import socket
-import threading
 
 
 BRIGHT_YELLOW = "#FFE800"
@@ -89,7 +88,7 @@ def esc_key():
 
 def console_command():
   "The function that controls the console command logic"
-  global useful_x_1, useful_y_1, write_console_command2, write_console_command3, custom_selected, coop_selected
+  global useful_x_1, useful_y_1, write_console_command2, write_console_command3, custom_selected, coop_selected, easy_select_draw
   thingy = turtle.textinput("", "Console Command Terminal")
   if thingy.lower() == "write white arial" or thingy.lower() == "white arial write" or thingy.lower() == "0":
     write_console_command = turtle.textinput("", "x coordinate")
@@ -123,6 +122,8 @@ def console_command():
     exit()
   elif thingy.lower() == "todo list" or thingy.lower() == "to-do list" or thingy.lower() == "to do list":
     todo_list = turtle.textinput('', '1. Finish Custom Game Mode Creation | 2. Add the settings menu')
+  elif thingy.lower() == 'easy.clear()':
+    easy_select_draw.clear()
     turtle.onkey(f1_key, 'F1')
     turtle.listen()
 
@@ -772,6 +773,18 @@ def redo_custom_select_1_text(thing : str, selected : int):
     custom_select_1_draw_write_thing.goto(300, 150)
     custom_select_1_draw_write_thing.write("Hard", align="center", font=("Arial", 20, "normal"))
     custom_select_1_draw_write_thing.color('white')
+  elif thing == "easy" and selected == 0:
+    custom_select_1_draw_write_thing.color('white')
+    custom_select_1_draw_write_thing.goto(-300, 150)
+    custom_select_1_draw_write_thing.write("Easy", align="center", font=("Arial", 20, "normal"))
+  elif thing == "medium" and selected == 0:
+    custom_select_1_draw_write_thing.color('white')
+    custom_select_1_draw_write_thing.goto(0, 150)
+    custom_select_1_draw_write_thing.write("Medium", align="center", font=("Arial", 20, "normal"))
+  elif thing == "hard" and selected == 0:
+    custom_select_1_draw_write_thing.color('white')
+    custom_select_1_draw_write_thing.goto(300, 150)
+    custom_select_1_draw_write_thing.write("Hard", align="center", font=("Arial", 20, "normal"))
 
 def custom_select_1():
   turtle.tracer(0, 0)
@@ -1540,7 +1553,7 @@ def bot_5_select():
     redo_bot_text(4)
 
 def check_custom_logic(thing : str):
-  global war_selected, infinity_selected, score_selected
+  global war_selected, infinity_selected, score_selected, easy_selected, medium_selected, hard_selected
   if thing.lower() == "war":
     if war_selected == 1:
       war_select_draw.clear()
@@ -1558,13 +1571,19 @@ def check_custom_logic(thing : str):
       redo_custom_select_1_text('score', 0)
   elif thing.lower() == "easy":
     if easy_selected == 1:
+      easy_select_draw.clear()
       easy_selected = 0
+      redo_custom_select_1_text('easy', 0)
   elif thing.lower() == "medium":
     if medium_selected == 1:
+      medium_select_draw.clear()
       medium_selected = 0
+      redo_custom_select_1_text('medium', 0)
   elif thing.lower() == "hard":
     if hard_selected == 1:
+      hard_select_draw.clear()
       hard_selected = 0
+      redo_custom_select_1_text('hard', 0)
 
 def infinity_select():
   #elif -350 <= x <= -250 and 350 <= y <= 380:
@@ -1598,7 +1617,6 @@ def infinity_select():
   #
   turtle.update()
   turtle.tracer(1, 10)
-
 
 def war_select():
   #elif -40 <= x <= 40 and 350 <= y <= 380:
@@ -1662,11 +1680,13 @@ def score_select():
 
 def easy_select():
   global easy_selected, easy_select_draw
-  turtle.tracer(1, 10)
+  turtle.tracer(0, 0)
+  easy_selected = 1
   easy_select_draw = turtle.Turtle()
   easy_select_draw.speed(0)
   easy_select_draw.color('white')
   easy_select_draw.penup()
+  easy_select_draw.hideturtle()
   easy_select_draw.goto(-340, 150)
   easy_select_draw.pendown()
   easy_select_draw.begin_fill()
@@ -1677,9 +1697,61 @@ def easy_select():
     easy_select_draw.left(90)
   easy_select_draw.color(BRIGHT_YELLOW)
   easy_select_draw.end_fill()
+  redo_custom_select_1_text('easy', 1)
+  check_custom_logic('medium')
+  check_custom_logic('hard')
   turtle.update()
   turtle.tracer(1, 10)
 
+def medium_select():
+  global medium_selected, medium_select_draw
+  turtle.tracer(0, 0)
+  medium_selected = 1
+  medium_select_draw = turtle.Turtle()
+  medium_select_draw.speed(0)
+  medium_select_draw.color('white')
+  medium_select_draw.penup()
+  medium_select_draw.hideturtle()
+  medium_select_draw.goto(-60, 150)
+  medium_select_draw.pendown()
+  medium_select_draw.begin_fill()
+  for _ in range(2):
+    medium_select_draw.forward(120)
+    medium_select_draw.left(90)
+    medium_select_draw.forward(30)
+    medium_select_draw.left(90)
+  medium_select_draw.color(BRIGHT_YELLOW)
+  medium_select_draw.end_fill()
+  redo_custom_select_1_text('medium', 1)
+  check_custom_logic('easy')
+  check_custom_logic('hard')
+  turtle.update()
+  turtle.tracer(1, 10)
+
+def hard_select():
+  global hard_selected, hard_select_draw
+  turtle.tracer(0, 0)
+  hard_selected = 1
+  hard_select_draw = turtle.Turtle()
+  hard_select_draw.speed(0)
+  hard_select_draw.color('white')
+  hard_select_draw.penup()
+  hard_select_draw.hideturtle()
+  hard_select_draw.goto(260, 150)
+  hard_select_draw.pendown()
+  hard_select_draw.begin_fill()
+  for _ in range(2):
+    hard_select_draw.forward(80)
+    hard_select_draw.left(90)
+    hard_select_draw.forward(30)
+    hard_select_draw.left(90)
+  hard_select_draw.color(BRIGHT_YELLOW)
+  hard_select_draw.end_fill()
+  redo_custom_select_1_text('hard', 1)
+  check_custom_logic('easy')
+  check_custom_logic('medium')
+  turtle.update()
+  turtle.tracer(1, 10)
 
 def click_thing(x, y):
   global starting_screen_on, new_game_screen_on, in_custom_menu #1
@@ -1732,6 +1804,13 @@ def click_thing(x, y):
         infinity_select_draw.clear()
       elif score_selected == 1:
         score_select_draw.clear()
+      #
+      if easy_selected == 1:
+        easy_select_draw.clear()
+      elif medium_selected == 1:
+        medium_select_draw.clear()
+      elif hard_selected == 1:
+        hard_select_draw.clear()
     elif -350 <= x <= -250 and 350 <= y <= 380:
       print("DEBUG", "|", "Infinity Selected In Custom Menu")
       infinity_select()
@@ -1743,23 +1822,15 @@ def click_thing(x, y):
       score_select()
     elif -340 <= x <= -260 and 150 <= y <= 180:
       print("DEBUG", "|", "Easy Selected")
+      easy_select()
     elif -60 <= x <= 60 and 150 <= y <= 180:
       print("DEBUG", "|", "Medium Selected")
+      medium_select()
     elif 260 <= x <= 340 and 150 <= y <= 180:
       print("DEBUG", "|", "Hard Selected")
+      hard_select()
 
-class Troop():
-  def __init__(self):
-    self.trooptype = []
-    self.health = 10
-    self.pos = (0, 0)
-    self.level = 0
-    self.weapon = []
-    self.ismovable = True
-  #
-  class Troop_Logic():
-    def __init__(self):
-      pass
+
 
 starting_screen()
 
